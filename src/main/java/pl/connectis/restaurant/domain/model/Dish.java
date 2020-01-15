@@ -1,19 +1,14 @@
-package pl.connectis.restaurant.infrastructure.entity;
+package pl.connectis.restaurant.domain.model;
 
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@Entity
-@Table(name = "dish")
-public class DishHibernate {
+public class Dish {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String description;
@@ -22,18 +17,21 @@ public class DishHibernate {
 
     private Boolean isAvailable;
 
-    //TODO check if this relation is set in a correct way, should it be PERSIST???
-    @ManyToMany(mappedBy = "dishes", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<BillHibernate> bills;
+    private List<Bill> bills;
 
-    public DishHibernate() {
+    public Dish(Long id,
+                String description,
+                BigDecimal price,
+                Boolean isAvailable) {
+        this.id = id;
+        this.description = description;
+        this.price = price;
+        this.isAvailable = isAvailable;
     }
 
-    public DishHibernate(Long id,
-                         String description,
-                         BigDecimal price,
-                         Boolean isAvailable) {
-        this.id = id;
+    public Dish(String description,
+                BigDecimal price,
+                Boolean isAvailable) {
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;
@@ -67,14 +65,14 @@ public class DishHibernate {
         isAvailable = available;
     }
 
-    public List<BillHibernate> getBills() {
+    public List<Bill> getBills() {
         if (this.bills == null) {
             this.bills = new ArrayList<>();
         }
         return bills;
     }
 
-    public void setBills(List<BillHibernate> bills) {
+    public void setBills(List<Bill> bills) {
         this.bills = bills;
     }
 
@@ -82,7 +80,7 @@ public class DishHibernate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DishHibernate that = (DishHibernate) o;
+        Dish that = (Dish) o;
         return Objects.equals(id, that.id);
     }
 
@@ -93,7 +91,7 @@ public class DishHibernate {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", DishHibernate.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Dish.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("description='" + description + "'")
                 .add("price=" + price)

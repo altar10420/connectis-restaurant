@@ -1,18 +1,11 @@
-package pl.connectis.restaurant.infrastructure.entity;
+package pl.connectis.restaurant.domain.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-@Entity
-@Table(name = "client")
-public class ClientHibernate {
+public class Client {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String name;
@@ -21,18 +14,20 @@ public class ClientHibernate {
 
     private BigDecimal discount;
 
-    //TODO check relation and its config
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BillHibernate> bills;
 
-    public ClientHibernate() {
+    public Client(Long id,
+                  String name,
+                  String surname,
+                  BigDecimal discount) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.discount = discount;
     }
 
-    public ClientHibernate(Long id,
-                           String name,
-                           String surname,
-                           BigDecimal discount) {
-        this.id = id;
+    public Client(String name,
+                  String surname,
+                  BigDecimal discount) {
         this.name = name;
         this.surname = surname;
         this.discount = discount;
@@ -66,22 +61,11 @@ public class ClientHibernate {
         this.discount = discount;
     }
 
-    public List<BillHibernate> getBills() {
-        if (this.bills == null) {
-            this.bills = new ArrayList<>();
-        }
-        return bills;
-    }
-
-    public void setBills(List<BillHibernate> bills) {
-        this.bills = bills;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientHibernate that = (ClientHibernate) o;
+        Client that = (Client) o;
         return Objects.equals(id, that.id);
     }
 
@@ -92,7 +76,7 @@ public class ClientHibernate {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ClientHibernate.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Client.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("name='" + name + "'")
                 .add("surname='" + surname + "'")
