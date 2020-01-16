@@ -1,9 +1,8 @@
 package pl.connectis.restaurant.domain.service;
 
-import pl.connectis.restaurant.domain.model.Bill;
+import org.springframework.data.domain.Pageable;
 import pl.connectis.restaurant.domain.model.Dish;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
