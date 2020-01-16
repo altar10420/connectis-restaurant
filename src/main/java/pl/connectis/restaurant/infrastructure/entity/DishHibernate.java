@@ -16,8 +16,6 @@ public class DishHibernate {
     @GeneratedValue
     private Long id;
 
-    private String name;
-
     private String description;
 
     private BigDecimal price;
@@ -32,12 +30,10 @@ public class DishHibernate {
     }
 
     public DishHibernate(Long id,
-                         String name,
                          String description,
                          BigDecimal price,
                          Boolean isAvailable) {
         this.id = id;
-        this.name = name;
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;
@@ -45,14 +41,6 @@ public class DishHibernate {
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -107,11 +95,9 @@ public class DishHibernate {
     public String toString() {
         return new StringJoiner(", ", DishHibernate.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("name='" + name + "'")
                 .add("description='" + description + "'")
                 .add("price=" + price)
                 .add("isAvailable=" + isAvailable)
-                .add("bills=" + bills)
                 .toString();
     }
 }

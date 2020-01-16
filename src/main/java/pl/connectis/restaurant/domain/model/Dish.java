@@ -11,8 +11,6 @@ public class Dish {
 
     private Long id;
 
-    private String name;
-
     private String description;
 
     private BigDecimal price;
@@ -22,22 +20,18 @@ public class Dish {
     private List<Bill> bills;
 
     public Dish(Long id,
-                String name,
                 String description,
                 BigDecimal price,
                 Boolean isAvailable) {
         this.id = id;
-        this.name = name;
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;
     }
 
-    public Dish(String name,
-                String description,
+    public Dish(String description,
                 BigDecimal price,
                 Boolean isAvailable) {
-        this.name = name;
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;
@@ -45,14 +39,6 @@ public class Dish {
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -107,11 +93,11 @@ public class Dish {
     public String toString() {
         return new StringJoiner(", ", Dish.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("name='" + name + "'")
                 .add("description='" + description + "'")
                 .add("price=" + price)
                 .add("isAvailable=" + isAvailable)
-                .add("bills=" + bills)
                 .toString();
     }
+
+
 }

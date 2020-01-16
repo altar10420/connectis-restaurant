@@ -31,6 +31,15 @@ public class BillHibernate {
     )
     private List<DishHibernate> dishes;
 
+    //TODO check if fetch and cascade settings make sense in this case
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "drink_bill",
+            joinColumns = @JoinColumn(name = "drink_id"),
+            inverseJoinColumns = @JoinColumn(name = "drink_id")
+    )
+    private List<DishHibernate> drinks;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private ClientHibernate client;

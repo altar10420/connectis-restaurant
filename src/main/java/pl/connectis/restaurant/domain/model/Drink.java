@@ -1,17 +1,9 @@
-package pl.connectis.restaurant.infrastructure.entity;
+package pl.connectis.restaurant.domain.model;
 
-import pl.connectis.restaurant.domain.model.Drink;
-
-import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "drink")
-public class DrinkHibernate {
+public class Drink {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String name;
@@ -24,11 +16,7 @@ public class DrinkHibernate {
 
     private int portion_ml;
 
-    //TODO check if this relation is set in a correct way, should it be PERSIST???
-    @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<BillHibernate> bills;
-
-    public DrinkHibernate(Long id, String name, String description, double price, Boolean is_available, int portion_ml) {
+    public Drink(Long id, String name, String description, double price, Boolean is_available, int portion_ml) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,7 +25,7 @@ public class DrinkHibernate {
         this.portion_ml = portion_ml;
     }
 
-    public DrinkHibernate(String name, String description, double price, Boolean is_available, int portion_ml) {
+    public Drink(String name, String description, double price, Boolean is_available, int portion_ml) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -93,8 +81,8 @@ public class DrinkHibernate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DrinkHibernate drinkHibernate = (DrinkHibernate) o;
-        return Objects.equals(id, drinkHibernate.id);
+        Drink drink = (Drink) o;
+        return Objects.equals(id, drink.id);
     }
 
     @Override

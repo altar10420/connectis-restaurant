@@ -1,31 +1,23 @@
-package pl.connectis.restaurant.infrastructure.entity;
+package pl.connectis.restaurant.domain.model;
 
-import pl.connectis.restaurant.domain.model.Product;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.Objects;
 
+public class Product {
 
-@Entity
-@Table(name = "product")
-public class ProductHibernate {
-
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String name;
 
     private int stored_amount;
 
-    public ProductHibernate() {
+    public Product(Long id, String name, int stored_amount) {
+        this.id = id;
+        this.name = name;
+        this.stored_amount = stored_amount;
     }
 
-    public ProductHibernate(Long id, String name, int stored_amount) {
-        this.id = id;
+    public Product(String name, int stored_amount) {
         this.name = name;
         this.stored_amount = stored_amount;
     }
@@ -54,8 +46,8 @@ public class ProductHibernate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductHibernate productHibernate = (ProductHibernate) o;
-        return Objects.equals(id, productHibernate.id);
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
     }
 
     @Override
@@ -72,3 +64,4 @@ public class ProductHibernate {
                 '}';
     }
 }
+
