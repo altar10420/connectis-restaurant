@@ -44,6 +44,10 @@ public class BillHibernate {
     @JoinColumn(name = "client_id")
     private ClientHibernate client;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private EmployeeHibernate employee;
+
     public BillHibernate() {
     }
 

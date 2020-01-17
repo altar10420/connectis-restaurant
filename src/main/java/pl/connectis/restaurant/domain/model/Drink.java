@@ -1,5 +1,6 @@
 package pl.connectis.restaurant.domain.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Drink {
@@ -10,13 +11,13 @@ public class Drink {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private Boolean is_available;
 
-    private int portion_ml;
+    private BigDecimal portion_ml;
 
-    public Drink(Long id, String name, String description, double price, Boolean is_available, int portion_ml) {
+    public Drink(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -25,13 +26,14 @@ public class Drink {
         this.portion_ml = portion_ml;
     }
 
-    public Drink(String name, String description, double price, Boolean is_available, int portion_ml) {
+    public Drink(String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.is_available = is_available;
         this.portion_ml = portion_ml;
     }
+
 
     public Long getId() {
         return id;
@@ -53,11 +55,11 @@ public class Drink {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -69,11 +71,11 @@ public class Drink {
         this.is_available = is_available;
     }
 
-    public int getPortion_ml() {
+    public BigDecimal getPortion_ml() {
         return portion_ml;
     }
 
-    public void setPortion_ml(int portion_ml) {
+    public void setPortion_ml(BigDecimal portion_ml) {
         this.portion_ml = portion_ml;
     }
 

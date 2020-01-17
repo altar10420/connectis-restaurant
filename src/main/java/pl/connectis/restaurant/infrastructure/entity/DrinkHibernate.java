@@ -3,6 +3,7 @@ package pl.connectis.restaurant.infrastructure.entity;
 import pl.connectis.restaurant.domain.model.Drink;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,17 +19,17 @@ public class DrinkHibernate {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private Boolean is_available;
 
-    private int portion_ml;
+    private BigDecimal portion_ml;
 
     //TODO check if this relation is set in a correct way, should it be PERSIST???
     @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 
-    public DrinkHibernate(Long id, String name, String description, double price, Boolean is_available, int portion_ml) {
+    public DrinkHibernate(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,12 +38,8 @@ public class DrinkHibernate {
         this.portion_ml = portion_ml;
     }
 
-    public DrinkHibernate(String name, String description, double price, Boolean is_available, int portion_ml) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.is_available = is_available;
-        this.portion_ml = portion_ml;
+    public DrinkHibernate() {
+
     }
 
     public Long getId() {
@@ -65,11 +62,11 @@ public class DrinkHibernate {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -81,11 +78,11 @@ public class DrinkHibernate {
         this.is_available = is_available;
     }
 
-    public int getPortion_ml() {
+    public BigDecimal getPortion_ml() {
         return portion_ml;
     }
 
-    public void setPortion_ml(int portion_ml) {
+    public void setPortion_ml(BigDecimal portion_ml) {
         this.portion_ml = portion_ml;
     }
 

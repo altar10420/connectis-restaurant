@@ -12,9 +12,12 @@ import java.util.StringJoiner;
 @Table(name = "dish")
 public class DishHibernate {
 
+
     @Id
     @GeneratedValue
     private Long id;
+
+    private String name;
 
     private String description;
 
@@ -30,10 +33,12 @@ public class DishHibernate {
     }
 
     public DishHibernate(Long id,
+                         String name,
                          String description,
                          BigDecimal price,
                          Boolean isAvailable) {
         this.id = id;
+        this.name = name;
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;
@@ -42,6 +47,10 @@ public class DishHibernate {
     public Long getId() {
         return id;
     }
+
+    public String getName() {return  name;}
+
+    public void setName(String name) {this.name = name; }
 
     public String getDescription() {
         return description;
@@ -95,6 +104,7 @@ public class DishHibernate {
     public String toString() {
         return new StringJoiner(", ", DishHibernate.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
+                .add("name=" + name)
                 .add("description='" + description + "'")
                 .add("price=" + price)
                 .add("isAvailable=" + isAvailable)
