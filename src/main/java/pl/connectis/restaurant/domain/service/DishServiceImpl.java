@@ -20,8 +20,17 @@ public class DishServiceImpl implements DishService{
     }
 
     @Override
-    public Long createDish(String name, String description, BigDecimal price, Boolean isAvailable) {
-        return null;
+    public Long createDish(String name,
+                           String description,
+                           BigDecimal price,
+                           Boolean isAvailable) {
+        Dish dish = dishRepository.createDish(
+                name,
+                description,
+                price,
+                isAvailable
+        );
+        return dish.getId();
     }
 
     @Override
@@ -31,7 +40,7 @@ public class DishServiceImpl implements DishService{
 
     @Override
     public List<Dish> getAllDishes(Pageable pageable) {
-        return null;
+        return dishRepository.getAllDishes(pageable);
     }
 
     @Override
