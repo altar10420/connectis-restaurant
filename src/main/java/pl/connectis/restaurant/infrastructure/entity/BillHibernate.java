@@ -22,8 +22,9 @@ public class BillHibernate {
 
     private BigDecimal tip;
 
-    //TODO check if fetch and cascade settings make sense in this case
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    //TODO check what fetch and cascade should be here
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "dish_bill",
             joinColumns = @JoinColumn(name = "bill_id"),
@@ -31,14 +32,15 @@ public class BillHibernate {
     )
     private List<DishHibernate> dishes;
 
-    //TODO check if fetch and cascade settings make sense in this case
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    //TODO check what fetch and cascade should be here
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "drink_bill",
-            joinColumns = @JoinColumn(name = "drink_id"),
+            joinColumns = @JoinColumn(name = "bill_id"),
             inverseJoinColumns = @JoinColumn(name = "drink_id")
     )
-    private List<DishHibernate> drinks;
+    private List<DrinkHibernate> drinks;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -98,6 +100,17 @@ public class BillHibernate {
 
     public void setDishes(List<DishHibernate> dishes) {
         this.dishes = dishes;
+    }
+
+    public List<DrinkHibernate> getDrinks() {
+        if (this.drinks == null) {
+            this.drinks = new ArrayList<>();
+        }
+        return drinks;
+    }
+
+    public void setDrinks(List<DrinkHibernate> drinks) {
+        this.drinks = drinks;
     }
 
     @Override

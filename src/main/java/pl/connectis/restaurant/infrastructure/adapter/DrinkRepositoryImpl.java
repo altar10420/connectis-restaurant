@@ -23,7 +23,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     }
 
     @Override
-    public Drink createDish(String name,
+    public Drink createDrink(String name,
                            String description,
                            BigDecimal price,
                            Boolean isAvailable,
@@ -42,7 +42,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     }
 
     @Override
-    public Optional<Drink> getDrinks(Long id) {
+    public Optional<Drink> getDrink(Long id) {
         return drinkHibernateRepository.findById(id).map(this::toDomain);
     }
 
