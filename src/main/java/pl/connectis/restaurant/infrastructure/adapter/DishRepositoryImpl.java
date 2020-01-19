@@ -2,6 +2,7 @@ package pl.connectis.restaurant.infrastructure.adapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.model.Dish;
@@ -10,8 +11,7 @@ import pl.connectis.restaurant.infrastructure.entity.DishHibernate;
 import pl.connectis.restaurant.infrastructure.repository.DishHibernateRepository;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -50,6 +50,16 @@ public class DishRepositoryImpl implements DishRepository {
     public List<Dish> getAllDishes(Pageable pageable) {
         Page<DishHibernate> page = dishHibernateRepository.findAll(pageable);
         List<DishHibernate> hibernates = page.getContent();
+        return hibernates.stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Dish> getDishMenuPage(int page) {
+        Page<DishHibernate> dishList = dishHibernateRepository.findAll(PageRequest.of(page, 10));
+        List<DishHibernate> hibernates = dishList.getContent();
+
         return hibernates.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());

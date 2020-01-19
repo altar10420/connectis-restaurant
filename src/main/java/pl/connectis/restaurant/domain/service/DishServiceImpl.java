@@ -44,6 +44,11 @@ public class DishServiceImpl implements DishService{
     }
 
     @Override
+    public List<Dish> getDishMenuPage(int page) {
+        return dishRepository.getDishMenuPage(page);
+    }
+
+    @Override
     public void removeDish(Long id) {
 
     }

@@ -29,6 +29,17 @@ public class DishController {
         return new DishDTO(dishOptional.get());
     }
 
+    @GetMapping(path = "/menu/{page}")
+    public List<DishDTO> getDishMenuPage(@PathVariable("page") Integer page) {
+        List<Dish> dishList = dishService.getDishMenuPage(page);
+        List<DishDTO> dishDTOList = new ArrayList<>();
+
+        for (Dish dish : dishList) {
+            dishDTOList.add(new DishDTO(dish));
+        }
+        return dishDTOList;
+    }
+
     @PostMapping(path = "/")
     public Long createDish(@RequestBody DishDTO dishDTO) {
         Long dishId = dishService.createDish(

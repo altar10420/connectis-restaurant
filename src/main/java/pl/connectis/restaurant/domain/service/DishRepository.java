@@ -20,5 +20,7 @@ public interface DishRepository {
 
     List<Dish> getAllDishes(Pageable pageable);
 
+    List<Dish> getDishMenuPage(int page);
+
     void removeDish(Long id);
 }
