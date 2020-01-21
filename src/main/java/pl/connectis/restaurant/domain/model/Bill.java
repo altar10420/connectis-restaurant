@@ -21,6 +21,17 @@ public class Bill {
 
     private Client client;
 
+    //TODO to be erased after finding way to add Client
+    public Bill(LocalDateTime date,
+                BigDecimal price,
+                BigDecimal tip,
+                List<Dish> dishes) {
+        this.date = date;
+        this.price = price;
+        this.tip = tip;
+        this.dishes = dishes;
+    }
+
     public Bill(Long id,
                 LocalDateTime date,
                 BigDecimal price,

@@ -25,7 +25,7 @@ public class DishController {
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
         Optional<Dish> dishOptional = dishService.getDish(id);
-        //TODO throw some exception if failed to get
+        //TODO throw some exception if failed
         return new DishDTO(dishOptional.get());
     }
 
@@ -37,6 +37,7 @@ public class DishController {
         for (Dish dish : dishList) {
             dishDTOList.add(new DishDTO(dish));
         }
+        //TODO throw some message/exception if failed
         return dishDTOList;
     }
 
@@ -48,6 +49,14 @@ public class DishController {
                 dishDTO.getPrice(),
                 dishDTO.getAvailable()
         );
+        //TODO throw some message/exception if failed
         return dishId;
+    }
+
+    @DeleteMapping(path = "/remove/{id}")
+    public String removeDish(@PathVariable("id") Long id) {
+        dishService.removeDish(id);
+        //TODO throw some message/exception if failed
+        return "REMOVED";
     }
 }

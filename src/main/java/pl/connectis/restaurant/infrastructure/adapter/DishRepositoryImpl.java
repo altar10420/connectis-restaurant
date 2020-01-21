@@ -46,6 +46,7 @@ public class DishRepositoryImpl implements DishRepository {
         return dishHibernateRepository.findById(id).map(this::toDomain);
     }
 
+    //TODO how to implement this in DishController???
     @Override
     public List<Dish> getAllDishes(Pageable pageable) {
         Page<DishHibernate> page = dishHibernateRepository.findAll(pageable);

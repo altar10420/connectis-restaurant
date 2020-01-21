@@ -1,5 +1,7 @@
 package pl.connectis.restaurant.infrastructure.entity;
 
+import pl.connectis.restaurant.domain.model.Dish;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
