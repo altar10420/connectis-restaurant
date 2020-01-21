@@ -9,15 +9,15 @@ public class Product {
 
     private String name;
 
-    private int stored_amount;
+    private BigInteger stored_amount;
 
-    public Product(Long id, String name, int stored_amount) {
+    public Product(Long id, String name, BigInteger stored_amount) {
         this.id = id;
         this.name = name;
         this.stored_amount = stored_amount;
     }
 
-    public Product(String name, int stored_amount) {
+    public Product(String name, BigInteger stored_amount) {
         this.name = name;
         this.stored_amount = stored_amount;
     }
@@ -34,11 +34,11 @@ public class Product {
         this.name = name;
     }
 
-    public int getStored_amount() {
+    public BigInteger getStored_amount() {
         return stored_amount;
     }
 
-    public void setStored_amount(int stored_amount) {
+    public void setStored_amount(BigInteger stored_amount) {
         this.stored_amount = stored_amount;
     }
 

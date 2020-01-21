@@ -17,9 +17,9 @@ public class Employee {
 
     private Long managerId;
 
-    private int pesel;
+    private BigInteger pesel;
 
-    public Employee(Long id, String name, String surname, String position, String salary, Long managerId, int pesel) {
+    public Employee(Long id, String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -29,7 +29,7 @@ public class Employee {
         this.pesel = pesel;
     }
 
-    public Employee(String name, String surname, String position, String salary, Long managerId, int pesel) {
+    public Employee(String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
         this.name = name;
         this.surname = surname;
         this.position = position;
@@ -82,11 +82,11 @@ public class Employee {
         this.managerId = managerId;
     }
 
-    public int getPesel() {
+    public BigInteger getPesel() {
         return pesel;
     }
 
-    public void setPesel(int pesel) {
+    public void setPesel(BigInteger pesel) {
         this.pesel = pesel;
     }
 

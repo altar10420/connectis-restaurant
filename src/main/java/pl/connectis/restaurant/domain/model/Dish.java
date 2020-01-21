@@ -113,6 +113,4 @@ public class Dish {
                 .add("isAvailable=" + isAvailable)
                 .toString();
     }
-
-
 }

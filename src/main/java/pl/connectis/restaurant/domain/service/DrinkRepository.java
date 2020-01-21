@@ -1,7 +1,9 @@
 package pl.connectis.restaurant.domain.service;
 
 import org.springframework.data.domain.Pageable;
+import pl.connectis.restaurant.domain.model.Dish;
 import pl.connectis.restaurant.domain.model.Drink;
+import pl.connectis.restaurant.domain.model.Employee;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +21,8 @@ public interface DrinkRepository {
     Optional<Drink> getDrink(Long id);
 
     List<Drink> getAllDrinks(Pageable pageable);
+
+    List<Drink> getDrinkMenuPage(int page);
 
     void removeDrink(Long id);
 }

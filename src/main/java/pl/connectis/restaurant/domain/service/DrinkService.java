@@ -12,14 +12,16 @@ public interface DrinkService {
     Long createDrink(
             String name,
             String description,
-            double price,
+            BigDecimal price,
             Boolean is_available,
-            int portion_ml
+            BigDecimal portion_ml
     );
 
     Optional<Drink> getDrink(Long id);
 
     List<Drink> getAllDrinks(Pageable pageable);
+
+    List<Drink> getDrinkMenuPage(int page);
 
     void removeDrink(Long id);
 

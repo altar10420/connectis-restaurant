@@ -2,6 +2,7 @@ package pl.connectis.restaurant.infrastructure.adapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import pl.connectis.restaurant.domain.model.Drink;
 import pl.connectis.restaurant.domain.service.DrinkRepository;
@@ -50,6 +51,16 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     public List<Drink> getAllDrinks(Pageable pageable) {
         Page<DrinkHibernate> page = drinkHibernateRepository.findAll(pageable);
         List<DrinkHibernate> hibernates = page.getContent();
+        return hibernates.stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Drink> getDrinkMenuPage(int page) {
+        Page<DrinkHibernate> drinkList = drinkHibernateRepository.findAll(PageRequest.of(page, 10));
+        List<DrinkHibernate> hibernates = drinkList.getContent();
+
         return hibernates.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
