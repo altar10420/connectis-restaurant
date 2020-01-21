@@ -17,9 +17,7 @@ public interface ClientService {
 
     Optional<Client> getClient(Long id);
 
-    List<Client> getAllClient(Pageable pageable);
-
-    List<Client> getClientMenuPage(int page);
+    List<Client> getAllClients(Pageable pageable);
 
     void removeClient(Long id);
 }

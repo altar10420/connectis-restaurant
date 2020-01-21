@@ -22,8 +22,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Long createProduct(String name,
-            BigInteger stored_amount) {
+    public Long createProduct(String name, BigInteger stored_amount) {
         Product product = productRepository.createProduct(
                 name,
                 stored_amount

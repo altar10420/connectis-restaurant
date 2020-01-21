@@ -37,13 +37,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAllClient(Pageable pageable) {
+    public List<Client> getAllClients(Pageable pageable) {
         return clientRepository.getAllClient(pageable);
-    }
-
-    @Override
-    public List<Client> getClientMenuPage(int page) {
-        return ClientRepository.getClientMenuPage(page);
     }
 
     @Override

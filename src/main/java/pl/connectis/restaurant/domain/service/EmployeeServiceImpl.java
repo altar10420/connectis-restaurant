@@ -22,13 +22,14 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Long createEmployee(String name, String surname, String position, BigDecimal salary, BigInteger pesel) {
+    public Long createEmployee(String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId) {
         Employee employee = employeeRepository.createEmployee(
                 name,
                 surname,
                 position,
                 salary,
-                pesel
+                pesel,
+                managerId
         );
         return employee.getId();
     }
@@ -40,12 +41,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public List<Employee> getAllEmployee(Pageable pageable) {
-        return EmployeeRepository.getAllEmployee(pageable);
+        return employeeRepository.getAllEmployee(pageable);
     }
 
     @Override
     public List<Employee> getEmployeeMenuPage (int page){
-        return EmployeeRepository.getEmployeeMenuPage(page);
+        return employeeRepository.getEmployeeMenuPage(page);
     }
 
     @Override

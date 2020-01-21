@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface ProductRepository {
     Product createProduct(
-            Long id,
             String name,
             BigInteger stored_amount
     );

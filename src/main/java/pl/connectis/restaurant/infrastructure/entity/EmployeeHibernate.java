@@ -3,6 +3,7 @@ package pl.connectis.restaurant.infrastructure.entity;
 import pl.connectis.restaurant.domain.model.Employee;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
@@ -21,17 +22,17 @@ public class EmployeeHibernate {
 
     private String position;
 
-    private String salary;
+    private BigDecimal salary;
 
     private Long managerId;
 
-    private BigInteger pesel;
+    private Long pesel;
 
     //TODO check relation and its config
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillHibernate> bills;
 
-    public EmployeeHibernate(Long id, String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
+    public EmployeeHibernate(Long id, String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -73,11 +74,11 @@ public class EmployeeHibernate {
         this.position = position;
     }
 
-    public String getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
@@ -89,11 +90,11 @@ public class EmployeeHibernate {
         this.managerId = managerId;
     }
 
-    public BigInteger getPesel() {
+    public Long getPesel() {
         return pesel;
     }
 
-    public void setPesel(BigInteger pesel) {
+    public void setPesel(Long pesel) {
         this.pesel = pesel;
     }
 

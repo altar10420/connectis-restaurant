@@ -1,5 +1,6 @@
 package pl.connectis.restaurant.domain.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -13,13 +14,13 @@ public class Employee {
 
     private String position;
 
-    private String salary;
+    private BigDecimal salary;
 
     private Long managerId;
 
-    private BigInteger pesel;
+    private Long pesel;
 
-    public Employee(Long id, String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
+    public Employee(Long id, String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -29,7 +30,7 @@ public class Employee {
         this.pesel = pesel;
     }
 
-    public Employee(String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
+    public Employee(String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
         this.name = name;
         this.surname = surname;
         this.position = position;
@@ -66,11 +67,11 @@ public class Employee {
         this.position = position;
     }
 
-    public String getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
@@ -82,11 +83,11 @@ public class Employee {
         this.managerId = managerId;
     }
 
-    public BigInteger getPesel() {
+    public Long getPesel() {
         return pesel;
     }
 
-    public void setPesel(BigInteger pesel) {
+    public void setPesel(Long pesel) {
         this.pesel = pesel;
     }
 

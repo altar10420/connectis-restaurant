@@ -15,14 +15,15 @@ public interface EmployeeService {
             String surname,
             String position,
             BigDecimal salary,
-            BigInteger pesel
+            Long pesel,
+            Long managerId
     );
 
     Optional<Employee> getEmployee(Long id);
 
     List<Employee> getAllEmployee(Pageable pageable);
 
-    public List<Employee> getEmployeeMenuPage (int page);
+    public List<Employee> getEmployeeMenuPage(int page);
 
     void removeEmployee(Long id);
 }

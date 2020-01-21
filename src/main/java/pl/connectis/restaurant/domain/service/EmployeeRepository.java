@@ -15,7 +15,8 @@ public interface EmployeeRepository {
             String surname,
             String position,
             BigDecimal salary,
-            BigInteger pesel
+            Long pesel,
+            Long managerId
     );
 
     List<Employee> getEmployeeMenuPage(int page);

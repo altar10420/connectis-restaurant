@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.model.Drink;
 import pl.connectis.restaurant.domain.service.DrinkRepository;
 import pl.connectis.restaurant.infrastructure.entity.DrinkHibernate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Repository
 public class DrinkRepositoryImpl implements DrinkRepository {
 
     private final DrinkHibernateRepository drinkHibernateRepository;

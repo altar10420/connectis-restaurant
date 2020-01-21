@@ -20,8 +20,12 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Long createDrink(String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
-        {
+    public Long createDrink(String name,
+                            String description,
+                            BigDecimal price,
+                            Boolean is_available,
+                            BigDecimal portion_ml) {
+
             Drink drink = drinkRepository.createDrink(
                     name,
                     description,
@@ -44,12 +48,12 @@ public class DrinkServiceImpl implements DrinkService {
 
         @Override
         public List<Drink> getDrinkMenuPage ( int page){
-            return DrinkRepository.getDrinkMenuPage(page);
+            return drinkRepository.getDrinkMenuPage(page);
         }
 
         @Override
         public void removeDrink (Long id){
 
         }
-    }
+
 }

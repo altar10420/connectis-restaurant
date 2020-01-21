@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private final EmployeeHibernateRepository employeeHibernateRepository;
@@ -26,24 +27,23 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public Employee createEmployee(Long id,
-                                   String name,
+    public Employee createEmployee(String name,
                                    String surname,
                                    String position,
-                                   String salary,
-                                   Long managerId,
-                                   BigInteger pesel) {
+                                   BigDecimal salary,
+                                   Long pesel,
+                                   Long managerId) {
         EmployeeHibernate employeeHibernate = new EmployeeHibernate(
                 null,
                 name,
                 surname,
                 position,
                 salary,
-                managerId,
-                pesel
+                pesel,
+                managerId
         );
 
-        EmployeeHibernateRepository.save(employeeHibernate);
+        employeeHibernateRepository.save(employeeHibernate);
         return toDomain(employeeHibernate);
     }
 
@@ -60,6 +60,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 .map(this::toDomain)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public List<Employee> getEmployeeMenuPage(int page) {

@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface ProductService {
 
     Long createProduct(
-            Long id,
             String name,
             BigInteger stored_amount
     );

@@ -1,6 +1,7 @@
 package pl.connectis.restaurant.domain.service;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.connectis.restaurant.domain.model.Drink;
 
 import java.math.BigDecimal;
