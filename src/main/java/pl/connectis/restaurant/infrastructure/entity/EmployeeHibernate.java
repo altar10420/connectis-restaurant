@@ -3,6 +3,7 @@ package pl.connectis.restaurant.infrastructure.entity;
 import pl.connectis.restaurant.domain.model.Employee;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,13 +25,13 @@ public class EmployeeHibernate {
 
     private Long managerId;
 
-    private int pesel;
+    private BigInteger pesel;
 
     //TODO check relation and its config
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillHibernate> bills;
 
-    public EmployeeHibernate(Long id, String name, String surname, String position, String salary, Long managerId, int pesel) {
+    public EmployeeHibernate(Long id, String name, String surname, String position, String salary, Long managerId, BigInteger pesel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -88,11 +89,11 @@ public class EmployeeHibernate {
         this.managerId = managerId;
     }
 
-    public int getPesel() {
+    public BigInteger getPesel() {
         return pesel;
     }
 
-    public void setPesel(int pesel) {
+    public void setPesel(BigInteger pesel) {
         this.pesel = pesel;
     }
 

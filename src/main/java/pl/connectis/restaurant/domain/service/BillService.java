@@ -1,5 +1,6 @@
 package pl.connectis.restaurant.domain.service;
 
+<<<<<<< HEAD
 import pl.connectis.restaurant.domain.model.Bill;
 import pl.connectis.restaurant.domain.model.Dish;
 
@@ -18,4 +19,7 @@ public interface BillService {
     );
 
     Optional<Bill> getBill(Long id);
+=======
+public interface BillService {
+>>>>>>> a450c1eb4fe6004e8f1f55fd58df5686f63be4b0
 }

@@ -1,15 +1,16 @@
 package pl.connectis.restaurant.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import pl.connectis.restaurant.domain.model.Drink;
 import org.springframework.stereotype.Service;
+import pl.connectis.restaurant.domain.model.Drink;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public class DrinkServiceImpl  implements DrinkService{
+@Service
+public class DrinkServiceImpl implements DrinkService {
 
     private final DrinkRepository drinkRepository;
 
@@ -19,22 +20,36 @@ public class DrinkServiceImpl  implements DrinkService{
     }
 
     @Override
-    public Long createDrink(String name, String description, double price, Boolean is_available, int portion_ml) {
-        return null;
-    }
+    public Long createDrink(String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
+        {
+            Drink drink = drinkRepository.createDrink(
+                    name,
+                    description,
+                    price,
+                    is_available,
+                    portion_ml
+            );
+            return drink.getId();
+        }
 
-    @Override
-    public Optional<Drink> getDrink(Long id) {
-        return drinkRepository.getDrink(id);
-    }
+        @Override
+        public Optional<Drink> getDrink (Long id){
+            return drinkRepository.getDrink(id);
+        }
 
-    @Override
-    public List<Drink> getAllDrinks(Pageable pageable) {
-        return null;
-    }
+        @Override
+        public List<Drink> getAllDrinks (Pageable pageable){
+            return drinkRepository.getAllDrinks(pageable);
+        }
 
-    @Override
-    public void removeDrink(Long id) {
+        @Override
+        public List<Drink> getDrinkMenuPage ( int page){
+            return DrinkRepository.getDrinkMenuPage(page);
+        }
 
+        @Override
+        public void removeDrink (Long id){
+
+        }
     }
 }
