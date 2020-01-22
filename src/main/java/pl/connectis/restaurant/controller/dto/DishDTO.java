@@ -68,6 +68,7 @@ public class DishDTO implements Serializable {
         isAvailable = available;
     }
 
+    //TODO check if this is even necessary in this design pattern???
     public DishHibernate toDomain() {
         return new DishHibernate(
                 id,
