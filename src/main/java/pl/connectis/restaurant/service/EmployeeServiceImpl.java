@@ -1,33 +1,31 @@
-package pl.connectis.restaurant.infrastructure.adapter;
+package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import pl.connectis.restaurant.domain.model.Employee;
-import pl.connectis.restaurant.domain.service.EmployeeRepository;
-import pl.connectis.restaurant.infrastructure.entity.EmployeeHibernate;
-import pl.connectis.restaurant.infrastructure.repository.EmployeeHibernateRepository;
+import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
+import pl.connectis.restaurant.service.EmployeeService;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class EmployeeRepositoryImpl implements EmployeeRepository {
+public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeHibernateRepository employeeHibernateRepository;
 
     @Autowired
-    public EmployeeRepositoryImpl(EmployeeHibernateRepository employeeHibernateRepository) {
+    public EmployeeServiceImpl(EmployeeHibernateRepository employeeHibernateRepository) {
         this.employeeHibernateRepository = employeeHibernateRepository;
     }
 
     @Override
-    public Employee createEmployee(String name,
+    public EmployeeHibernate createEmployee(String name,
                                    String surname,
                                    String position,
                                    BigDecimal salary,
@@ -48,12 +46,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public Optional<Employee> getEmployee(Long id) {
+    public Optional<EmployeeHibernate> getEmployee(Long id) {
         return employeeHibernateRepository.findById(id).map(this::toDomain);
     }
 
     @Override
-    public List<Employee> getAllEmployee(Pageable pageable) {
+    public List<EmployeeHibernate> getAllEmployee(Pageable pageable) {
         Page<EmployeeHibernate> page = employeeHibernateRepository.findAll(pageable);
         List<EmployeeHibernate> hibernates = page.getContent();
         return hibernates.stream()
@@ -63,7 +61,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 
     @Override
-    public List<Employee> getEmployeeMenuPage(int page) {
+    public List<EmployeeHibernate> getEmployeeMenuPage(int page) {
         Page<EmployeeHibernate> employeeList = employeeHibernateRepository.findAll(PageRequest.of(page, 10));
         List<EmployeeHibernate> hibernates = employeeList.getContent();
 
@@ -77,8 +75,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         employeeHibernateRepository.deleteById(id);
     }
 
-    public Employee toDomain(EmployeeHibernate hibernate) {
-        return new Employee(
+    public EmployeeHibernate toDomain(EmployeeHibernate hibernate) {
+        return new EmployeeHibernate(
                 hibernate.getId(),
                 hibernate.getName(),
                 hibernate.getSurname(),

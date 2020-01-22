@@ -1,16 +1,15 @@
-package pl.connectis.restaurant.domain.service;
+package pl.connectis.restaurant.service;
 
 import org.springframework.data.domain.Pageable;
-import pl.connectis.restaurant.domain.model.Employee;
+import pl.connectis.restaurant.domain.EmployeeHibernate;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
 
-    Long createEmployee(
+    EmployeeHibernate createEmployee(
             String name,
             String surname,
             String position,
@@ -19,11 +18,11 @@ public interface EmployeeService {
             Long managerId
     );
 
-    Optional<Employee> getEmployee(Long id);
+    List<EmployeeHibernate> getEmployeeMenuPage(int page);
 
-    List<Employee> getAllEmployee(Pageable pageable);
+    Optional<EmployeeHibernate> getEmployee(Long id);
 
-    public List<Employee> getEmployeeMenuPage(int page);
+    List<EmployeeHibernate> getAllEmployee(Pageable pageable);
 
     void removeEmployee(Long id);
 }

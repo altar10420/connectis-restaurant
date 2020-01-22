@@ -1,6 +1,6 @@
 package pl.connectis.restaurant.controller.dto;
 
-import pl.connectis.restaurant.domain.model.Drink;
+import pl.connectis.restaurant.domain.DrinkHibernate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,13 +22,13 @@ public class DrinkDTO implements Serializable {
     public DrinkDTO() {
     }
 
-    public DrinkDTO(Drink drink) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.is_available = is_available;
-        this.portion_ml = portion_ml;
+    public DrinkDTO(DrinkHibernate drink) {
+        this.id = drink.getId();
+        this.name = drink.getName();
+        this.description = drink.getDescription();
+        this.price = drink.getPrice();
+        this.is_available = drink.getIs_available();
+        this.portion_ml = drink.getPortion_ml();
     }
 
     public Long getId() {
@@ -79,8 +79,8 @@ public class DrinkDTO implements Serializable {
         this.portion_ml = portion_ml;
     }
 
-    public Drink toDomain() {
-        return new Drink(
+    public DrinkHibernate toDomain() {
+        return new DrinkHibernate(
                 id,
                 name,
                 description,

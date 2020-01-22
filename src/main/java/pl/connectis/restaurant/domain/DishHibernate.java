@@ -1,14 +1,20 @@
-package pl.connectis.restaurant.domain.model;
+package pl.connectis.restaurant.domain;
 
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Dish {
+@Entity
+@Table(name = "dish")
+public class DishHibernate {
 
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -19,24 +25,19 @@ public class Dish {
 
     private Boolean isAvailable;
 
-    private List<Bill> bills;
+    //TODO check if this relation is set in a correct way, should it be PERSIST???
+    @ManyToMany(mappedBy = "dishes", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<BillHibernate> bills;
 
-    public Dish(Long id,
-                String name,
-                String description,
-                BigDecimal price,
-                Boolean isAvailable) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.isAvailable = isAvailable;
+    public DishHibernate() {
     }
 
-    public Dish(String name,
-                String description,
-                BigDecimal price,
-                Boolean isAvailable) {
+    public DishHibernate(Long id,
+                         String name,
+                         String description,
+                         BigDecimal price,
+                         Boolean isAvailable) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -47,20 +48,16 @@ public class Dish {
         return id;
     }
 
+    public String getName() {return  name;}
+
+    public void setName(String name) {this.name = name; }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public BigDecimal getPrice() {
@@ -79,14 +76,14 @@ public class Dish {
         isAvailable = available;
     }
 
-    public List<Bill> getBills() {
+    public List<BillHibernate> getBills() {
         if (this.bills == null) {
             this.bills = new ArrayList<>();
         }
         return bills;
     }
 
-    public void setBills(List<Bill> bills) {
+    public void setBills(List<BillHibernate> bills) {
         this.bills = bills;
     }
 
@@ -94,7 +91,7 @@ public class Dish {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Dish that = (Dish) o;
+        DishHibernate that = (DishHibernate) o;
         return Objects.equals(id, that.id);
     }
 
@@ -105,7 +102,7 @@ public class Dish {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Dish.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", DishHibernate.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("name=" + name)
                 .add("description='" + description + "'")

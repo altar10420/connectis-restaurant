@@ -1,7 +1,7 @@
-package pl.connectis.restaurant.infrastructure.repository;
+package pl.connectis.restaurant.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.connectis.restaurant.infrastructure.entity.BillHibernate;
+import pl.connectis.restaurant.domain.BillHibernate;
 
 public interface BillHibernateRepository
         extends CrudRepository<BillHibernate, Long> {

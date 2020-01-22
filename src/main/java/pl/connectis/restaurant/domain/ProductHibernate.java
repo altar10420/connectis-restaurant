@@ -1,6 +1,4 @@
-package pl.connectis.restaurant.infrastructure.entity;
-
-import pl.connectis.restaurant.domain.model.Product;
+package pl.connectis.restaurant.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

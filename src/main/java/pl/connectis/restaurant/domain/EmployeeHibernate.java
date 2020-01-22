@@ -1,11 +1,16 @@
-package pl.connectis.restaurant.domain.model;
+package pl.connectis.restaurant.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.List;
 import java.util.Objects;
 
-public class Employee {
+@Entity
+@Table(name = "employee")
+public class EmployeeHibernate {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -20,7 +25,11 @@ public class Employee {
 
     private Long pesel;
 
-    public Employee(Long id, String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
+    //TODO check relation and its config
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BillHibernate> bills;
+
+    public EmployeeHibernate(Long id, String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -30,13 +39,8 @@ public class Employee {
         this.pesel = pesel;
     }
 
-    public Employee(String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
-        this.name = name;
-        this.surname = surname;
-        this.position = position;
-        this.salary = salary;
-        this.managerId = managerId;
-        this.pesel = pesel;
+    public EmployeeHibernate() {
+
     }
 
     public Long getId() {
@@ -95,8 +99,8 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
+        EmployeeHibernate employeeHibernate = (EmployeeHibernate) o;
+        return Objects.equals(id, employeeHibernate.id);
     }
 
     @Override

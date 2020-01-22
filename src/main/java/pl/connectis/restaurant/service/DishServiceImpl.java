@@ -1,31 +1,29 @@
-package pl.connectis.restaurant.infrastructure.adapter;
+package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import pl.connectis.restaurant.domain.model.Dish;
-import pl.connectis.restaurant.domain.service.DishRepository;
-import pl.connectis.restaurant.infrastructure.entity.DishHibernate;
-import pl.connectis.restaurant.infrastructure.repository.DishHibernateRepository;
+import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.repository.DishHibernateRepository;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
-public class DishRepositoryImpl implements DishRepository {
+public class DishServiceImpl implements DishService {
 
     private final DishHibernateRepository dishHibernateRepository;
 
     @Autowired
-    public DishRepositoryImpl(DishHibernateRepository dishHibernateRepository) {
+    public DishServiceImpl(DishHibernateRepository dishHibernateRepository) {
         this.dishHibernateRepository = dishHibernateRepository;
     }
 
     @Override
-    public Dish createDish(String name,
+    public Long createDish(String name,
                            String description,
                            BigDecimal price,
                            Boolean isAvailable) {
@@ -38,17 +36,17 @@ public class DishRepositoryImpl implements DishRepository {
         );
 
         dishHibernateRepository.save(dishHibernate);
-        return toDomain(dishHibernate);
+        return dishHibernate.getId();
     }
 
     @Override
-    public Optional<Dish> getDish(Long id) {
+    public Optional<DishHibernate> getDish(Long id) {
         return dishHibernateRepository.findById(id).map(this::toDomain);
     }
 
-    //TODO how to implement this in DishController???
+    //TODO how to implement this in DishHibernateController???
     @Override
-    public List<Dish> getAllDishes(Pageable pageable) {
+    public List<DishHibernate> getAllDishes(Pageable pageable) {
         Page<DishHibernate> page = dishHibernateRepository.findAll(pageable);
         List<DishHibernate> hibernates = page.getContent();
         return hibernates.stream()
@@ -57,9 +55,9 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public List<Dish> getDishMenuPage(int page) {
-        Page<DishHibernate> dishList = dishHibernateRepository.findAll(PageRequest.of(page, 10));
-        List<DishHibernate> hibernates = dishList.getContent();
+    public List<DishHibernate> getDishMenuPage(int page) {
+        Page<DishHibernate> dishHibernateList = dishHibernateRepository.findAll(PageRequest.of(page, 10));
+        List<DishHibernate> hibernates = dishHibernateList.getContent();
 
         return hibernates.stream()
                 .map(this::toDomain)
@@ -71,8 +69,8 @@ public class DishRepositoryImpl implements DishRepository {
         dishHibernateRepository.deleteById(id);
     }
 
-    public Dish toDomain(DishHibernate hibernate) {
-        return new Dish(
+    public DishHibernate toDomain(DishHibernate hibernate) {
+        return new DishHibernate(
                 hibernate.getId(),
                 hibernate.getName(),
                 hibernate.getDescription(),

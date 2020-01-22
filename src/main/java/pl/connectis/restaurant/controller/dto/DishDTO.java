@@ -1,6 +1,6 @@
 package pl.connectis.restaurant.controller.dto;
 
-import pl.connectis.restaurant.domain.model.Dish;
+import pl.connectis.restaurant.domain.DishHibernate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ public class DishDTO implements Serializable {
     public DishDTO() {
     }
 
-    public DishDTO(Dish dish) {
+    public DishDTO(DishHibernate dish) {
         this.id = dish.getId();
         this.name = dish.getName();
         this.description = dish.getDescription();
@@ -68,8 +68,8 @@ public class DishDTO implements Serializable {
         isAvailable = available;
     }
 
-    public Dish toDomain() {
-        return new Dish(
+    public DishHibernate toDomain() {
+        return new DishHibernate(
                 id,
                 name,
                 description,

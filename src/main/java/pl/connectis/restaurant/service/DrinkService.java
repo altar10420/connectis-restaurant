@@ -1,15 +1,13 @@
-package pl.connectis.restaurant.domain.service;
+package pl.connectis.restaurant.service;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import pl.connectis.restaurant.domain.model.Drink;
+import pl.connectis.restaurant.domain.DrinkHibernate;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public interface DrinkService {
-
     Long createDrink(
             String name,
             String description,
@@ -18,12 +16,11 @@ public interface DrinkService {
             BigDecimal portion_ml
     );
 
-    Optional<Drink> getDrink(Long id);
+    Optional<DrinkHibernate> getDrink(Long id);
 
-    List<Drink> getAllDrinks(Pageable pageable);
+    List<DrinkHibernate> getAllDrinks(Pageable pageable);
 
-    List<Drink> getDrinkMenuPage(int page);
+    List<DrinkHibernate> getDrinkMenuPage(int page);
 
     void removeDrink(Long id);
-
 }

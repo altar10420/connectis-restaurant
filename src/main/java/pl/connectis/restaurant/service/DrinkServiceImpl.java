@@ -1,14 +1,14 @@
-package pl.connectis.restaurant.infrastructure.adapter;
+package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import pl.connectis.restaurant.domain.model.Drink;
-import pl.connectis.restaurant.domain.service.DrinkRepository;
-import pl.connectis.restaurant.infrastructure.entity.DrinkHibernate;
-import pl.connectis.restaurant.infrastructure.repository.DrinkHibernateRepository;
+import pl.connectis.restaurant.domain.DrinkHibernate;
+import pl.connectis.restaurant.domain.DrinkHibernate;
+import pl.connectis.restaurant.repository.DrinkHibernateRepository;
+import pl.connectis.restaurant.service.DrinkService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,17 +16,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class DrinkRepositoryImpl implements DrinkRepository {
+public class DrinkServiceImpl implements DrinkService {
 
     private final DrinkHibernateRepository drinkHibernateRepository;
 
     @Autowired
-    public DrinkRepositoryImpl(DrinkHibernateRepository drinkHibernateRepository) {
+    public DrinkServiceImpl(DrinkHibernateRepository drinkHibernateRepository) {
         this.drinkHibernateRepository = drinkHibernateRepository;
     }
 
     @Override
-    public Drink createDrink(String name,
+    public Long createDrink(String name,
                            String description,
                            BigDecimal price,
                            Boolean isAvailable,
@@ -41,16 +41,16 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         );
 
         drinkHibernateRepository.save(drinkHibernate);
-        return toDomain(drinkHibernate);
+        return drinkHibernate.getId();
     }
 
     @Override
-    public Optional<Drink> getDrink(Long id) {
+    public Optional<DrinkHibernate> getDrink(Long id) {
         return drinkHibernateRepository.findById(id).map(this::toDomain);
     }
 
     @Override
-    public List<Drink> getAllDrinks(Pageable pageable) {
+    public List<DrinkHibernate> getAllDrinks(Pageable pageable) {
         Page<DrinkHibernate> page = drinkHibernateRepository.findAll(pageable);
         List<DrinkHibernate> hibernates = page.getContent();
         return hibernates.stream()
@@ -59,7 +59,7 @@ public class DrinkRepositoryImpl implements DrinkRepository {
     }
 
     @Override
-    public List<Drink> getDrinkMenuPage(int page) {
+    public List<DrinkHibernate> getDrinkMenuPage(int page) {
         Page<DrinkHibernate> drinkList = drinkHibernateRepository.findAll(PageRequest.of(page, 10));
         List<DrinkHibernate> hibernates = drinkList.getContent();
 
@@ -73,8 +73,8 @@ public class DrinkRepositoryImpl implements DrinkRepository {
         drinkHibernateRepository.deleteById(id);
     }
 
-    public Drink toDomain(DrinkHibernate hibernate) {
-        return new Drink(
+    public DrinkHibernate toDomain(DrinkHibernate hibernate) {
+        return new DrinkHibernate(
                 hibernate.getId(),
                 hibernate.getName(),
                 hibernate.getDescription(),

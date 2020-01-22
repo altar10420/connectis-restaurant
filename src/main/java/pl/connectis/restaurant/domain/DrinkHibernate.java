@@ -1,6 +1,4 @@
-package pl.connectis.restaurant.infrastructure.entity;
-
-import pl.connectis.restaurant.domain.model.Drink;
+package pl.connectis.restaurant.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

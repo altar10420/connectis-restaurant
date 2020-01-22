@@ -1,7 +1,7 @@
-package pl.connectis.restaurant.domain.service;
+package pl.connectis.restaurant.service;
 
 import org.springframework.data.domain.Pageable;
-import pl.connectis.restaurant.domain.model.Dish;
+import pl.connectis.restaurant.domain.DishHibernate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,12 +16,11 @@ public interface DishService {
             Boolean isAvailable
     );
 
-    Optional<Dish> getDish(Long id);
+    Optional<DishHibernate> getDish(Long id);
 
-    List<Dish> getAllDishes(Pageable pageable);
+    List<DishHibernate> getAllDishes(Pageable pageable);
 
-    List<Dish> getDishMenuPage(int page);
+    List<DishHibernate> getDishMenuPage(int page);
 
     void removeDish(Long id);
-
 }

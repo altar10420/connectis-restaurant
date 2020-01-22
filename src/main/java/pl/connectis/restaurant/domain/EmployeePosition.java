@@ -1,4 +1,4 @@
-package pl.connectis.restaurant.domain.model;
+package pl.connectis.restaurant.domain;
 
 public enum EmployeePosition {
     WAITER,

@@ -1,11 +1,10 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DishDTO;
-import pl.connectis.restaurant.domain.model.Dish;
-import pl.connectis.restaurant.domain.service.DishService;
+import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.service.DishService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +23,17 @@ public class DishController {
 
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
-        Optional<Dish> dishOptional = dishService.getDish(id);
+        Optional<DishHibernate> dishOptional = dishService.getDish(id);
         //TODO throw some exception if failed
         return new DishDTO(dishOptional.get());
     }
 
     @GetMapping(path = "/menu/{page}")
     public List<DishDTO> getDishMenuPage(@PathVariable("page") Integer page) {
-        List<Dish> dishList = dishService.getDishMenuPage(page);
+        List<DishHibernate> dishList = dishService.getDishMenuPage(page);
         List<DishDTO> dishDTOList = new ArrayList<>();
 
-        for (Dish dish : dishList) {
+        for (DishHibernate dish : dishList) {
             dishDTOList.add(new DishDTO(dish));
         }
         //TODO throw some message/exception if failed
