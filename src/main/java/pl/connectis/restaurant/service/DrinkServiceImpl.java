@@ -5,11 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
 import pl.connectis.restaurant.service.DrinkService;
 
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +68,21 @@ public class DrinkServiceImpl implements DrinkService {
         return hibernates.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateDrink(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
+        Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
+
+        DrinkHibernate drinkHibernate = drinkHibernateOptional.get();
+        drinkHibernate.setName(name);
+        drinkHibernate.setDescription(description);
+        drinkHibernate.setPrice(price);
+        drinkHibernate.setIs_available(is_available);
+        drinkHibernate.setPortion_ml(portion_ml);
+
+        drinkHibernateRepository.save(drinkHibernate);
     }
 
     @Override

@@ -22,5 +22,7 @@ public interface DrinkService {
 
     List<DrinkHibernate> getDrinkMenuPage(int page);
 
+    void updateDrink(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml);
+
     void removeDrink(Long id);
 }
