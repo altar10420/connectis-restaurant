@@ -12,7 +12,7 @@ public interface DrinkService {
             String name,
             String description,
             BigDecimal price,
-            Boolean is_available,
+            Boolean isAvailable,
             BigDecimal portion_ml
     );
 
@@ -22,7 +22,7 @@ public interface DrinkService {
 
     List<DrinkHibernate> getDrinkMenuPage(int page);
 
-    void updateDrink(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml);
+    void updateDrink(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml);
 
     void removeDrink(Long id);
 }

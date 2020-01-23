@@ -15,7 +15,7 @@ public class DrinkDTO implements Serializable {
 
     private BigDecimal price;
 
-    private Boolean is_available;
+    private Boolean isAvailable;
 
     private BigDecimal portion_ml;
 
@@ -27,7 +27,7 @@ public class DrinkDTO implements Serializable {
         this.name = drink.getName();
         this.description = drink.getDescription();
         this.price = drink.getPrice();
-        this.is_available = drink.getIs_available();
+        this.isAvailable = drink.getAvailable();
         this.portion_ml = drink.getPortion_ml();
     }
 
@@ -64,11 +64,11 @@ public class DrinkDTO implements Serializable {
     }
 
     public Boolean getAvailable() {
-        return is_available;
+        return isAvailable;
     }
 
-    public void setAvailable(Boolean available) {
-        is_available = available;
+    public void setAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public BigDecimal getPortion_ml() {
@@ -85,7 +85,7 @@ public class DrinkDTO implements Serializable {
                 name,
                 description,
                 price,
-                is_available,
+                isAvailable,
                 portion_ml
         );
     }

@@ -7,11 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DrinkHibernate;
-import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
-import pl.connectis.restaurant.service.DrinkService;
 
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -72,14 +69,14 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     @Transactional
-    public void updateDrink(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
+    public void updateDrink(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml) {
         Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
 
         DrinkHibernate drinkHibernate = drinkHibernateOptional.get();
         drinkHibernate.setName(name);
         drinkHibernate.setDescription(description);
         drinkHibernate.setPrice(price);
-        drinkHibernate.setIs_available(is_available);
+        drinkHibernate.setAvailable(isAvailable);
         drinkHibernate.setPortion_ml(portion_ml);
 
         drinkHibernateRepository.save(drinkHibernate);
@@ -96,7 +93,7 @@ public class DrinkServiceImpl implements DrinkService {
                 hibernate.getName(),
                 hibernate.getDescription(),
                 hibernate.getPrice(),
-                hibernate.getIs_available(),
+                hibernate.getAvailable(),
                 hibernate.getPortion_ml()
         );
     }

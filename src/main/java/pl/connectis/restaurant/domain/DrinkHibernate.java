@@ -19,7 +19,7 @@ public class DrinkHibernate {
 
     private BigDecimal price;
 
-    private Boolean is_available;
+    private Boolean isAvailable;
 
     private BigDecimal portion_ml;
 
@@ -27,12 +27,12 @@ public class DrinkHibernate {
     @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 
-    public DrinkHibernate(Long id, String name, String description, BigDecimal price, Boolean is_available, BigDecimal portion_ml) {
+    public DrinkHibernate(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.is_available = is_available;
+        this.isAvailable = isAvailable;
         this.portion_ml = portion_ml;
     }
 
@@ -68,12 +68,12 @@ public class DrinkHibernate {
         this.price = price;
     }
 
-    public Boolean getIs_available() {
-        return is_available;
+    public Boolean getAvailable() {
+        return isAvailable;
     }
 
-    public void setIs_available(Boolean is_available) {
-        this.is_available = is_available;
+    public void setAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public BigDecimal getPortion_ml() {
@@ -104,7 +104,7 @@ public class DrinkHibernate {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", is_available=" + is_available +
+                ", isAvailable=" + isAvailable +
                 ", portion_ml=" + portion_ml +
                 '}';
     }
