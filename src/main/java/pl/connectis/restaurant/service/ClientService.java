@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientService {
-    ClientHibernate createClient(
+    Long createClient(
             String name,
             String surname,
             BigDecimal discount

@@ -2,12 +2,10 @@ package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
-import pl.connectis.restaurant.service.EmployeeService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeHibernate createEmployee(String name,
+    public Long createEmployee(String name,
                                    String surname,
                                    String position,
                                    BigDecimal salary,
@@ -42,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
 
         employeeHibernateRepository.save(employeeHibernate);
-        return toDomain(employeeHibernate);
+        return employeeHibernate.getId();
     }
 
     @Override
@@ -54,17 +52,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeHibernate> getAllEmployee(Pageable pageable) {
         Page<EmployeeHibernate> page = employeeHibernateRepository.findAll(pageable);
         List<EmployeeHibernate> hibernates = page.getContent();
-        return hibernates.stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<EmployeeHibernate> getEmployeeMenuPage(int page) {
-        Page<EmployeeHibernate> employeeList = employeeHibernateRepository.findAll(PageRequest.of(page, 10));
-        List<EmployeeHibernate> hibernates = employeeList.getContent();
-
         return hibernates.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());

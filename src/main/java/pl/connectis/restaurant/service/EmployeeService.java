@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
-    EmployeeHibernate createEmployee(
+    Long createEmployee(
             String name,
             String surname,
             String position,
@@ -17,8 +17,6 @@ public interface EmployeeService {
             Long pesel,
             Long managerId
     );
-
-    List<EmployeeHibernate> getEmployeeMenuPage(Integer page);
 
     Optional<EmployeeHibernate> getEmployee(Long id);
 

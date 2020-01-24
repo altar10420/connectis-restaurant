@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public class ProductServiceImpl implements pl.connectis.restaurant.service.ProductService {
     @Override
-    public ProductHibernate createProduct(String name, BigInteger stored_amount) {
+    public Long createProduct(String name, BigInteger stored_amount) {
         return null;
     }
 

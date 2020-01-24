@@ -1,6 +1,5 @@
 package pl.connectis.restaurant.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 import pl.connectis.restaurant.service.EmployeeService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,17 +30,6 @@ public class EmployeeController {
         return new EmployeeDTO(employeeOptional.get());
     }
 
-    @GetMapping(path = "/menu/{page}")
-    public List<EmployeeDTO> getEmployeeMenuPage(@PathVariable("page") Integer page) {
-        List<EmployeeHibernate> employeeList = employeeService.getEmployeeMenuPage(page);
-        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
-
-        for (EmployeeHibernate employee : employeeList) {
-            employeeDTOList.add(new EmployeeDTO(employee));
-        }
-        return employeeDTOList;
-    }
-
     @PostMapping(path = "/")
     public Long createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Long employeeId = employeeService.createEmployee(
@@ -51,9 +37,9 @@ public class EmployeeController {
                 employeeDTO.getSurname(),
                 employeeDTO.getPosition(),
                 employeeDTO.getSalary(),
-                employeeDTO.getManagerId(),
-                employeeDTO.getPesel()
-        );
+                employeeDTO.getPesel(),
+                employeeDTO.getManagerId()
+                );
         return employeeId;
     }
 

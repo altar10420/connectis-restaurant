@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    ProductHibernate createProduct(
+    Long createProduct(
             String name,
             BigInteger stored_amount
     );

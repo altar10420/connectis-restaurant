@@ -18,11 +18,11 @@ public class ClientDTO implements Serializable {
     public ClientDTO() {
     }
 
-    public ClientDTO(Long id, String name, String surname, BigDecimal discount) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.discount = discount;
+    public ClientDTO(ClientHibernate client) {
+        this.id = client.getId();
+        this.name = client.getName();
+        this.surname = client.getSurname();
+        this.discount = client.getDiscount();
     }
 
     public Long getId() {

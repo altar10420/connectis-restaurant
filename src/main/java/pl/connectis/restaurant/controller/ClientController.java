@@ -56,17 +56,17 @@ public class ClientController {
         return clientId;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ClientHibernate> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO drinkDTO){
-        Optional<ClientHibernate> clientHibernateOptional = clientHibernateRepository.findById(id);
-        ClientHibernate _clientHibernate = clientHibernateOptional.get();
-        if(clientHibernateOptional.isPresent()){
-            _clientHibernate.setName(drinkDTO.getName());
-            _clientHibernate.setSurname(drinkDTO.getSurname());
-            _clientHibernate.setDiscount(drinkDTO.getDiscount());
-        }
-        return new ResponseEntity<>(clientHibernateRepository.save(_clientHibernate), HttpStatus.OK);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ClientHibernate> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO drinkDTO){
+//        Optional<ClientHibernate> clientHibernateOptional = clientHibernateRepository.findById(id);
+//        ClientHibernate _clientHibernate = clientHibernateOptional.get();
+//        if(clientHibernateOptional.isPresent()){
+//            _clientHibernate.setName(drinkDTO.getName());
+//            _clientHibernate.setSurname(drinkDTO.getSurname());
+//            _clientHibernate.setDiscount(drinkDTO.getDiscount());
+//        }
+//        return new ResponseEntity<>(clientHibernateRepository.save(_clientHibernate), HttpStatus.OK);
+//    }
 
     @DeleteMapping(path = "/{id}")
     public String removeClient(@PathVariable("id") Long id) {

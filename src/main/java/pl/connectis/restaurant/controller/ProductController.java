@@ -33,21 +33,9 @@ public class ProductController {
         return new ProductDTO(productOptional.get());
     }
 
-    @GetMapping(path = "/menu/{page}")
-    public List<ProductDTO> getProductMenuPage(@PathVariable("page") Integer page) {
-        List<ProductHibernate> productList = productService.getProductMenuPage(page);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-
-        for (ProductHibernate product : productList) {
-            productDTOList.add(new ProductDTO(product));
-        }
-        //TODO throw some message/exception if failed
-        return productDTOList;
-    }
-
     @PostMapping(path = "/")
     public Long createProduct(@RequestBody ProductDTO productDTO) {
-        ProductHibernate productId = productService.createProduct(
+        Long productId = productService.createProduct(
                 productDTO.getName(),
                 productDTO.getStored_amount()
         );
