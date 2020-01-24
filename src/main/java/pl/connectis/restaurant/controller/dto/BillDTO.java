@@ -18,10 +18,9 @@ public class BillDTO implements Serializable {
 
     private BigDecimal tip;
 
-//    private List<DishHibernate> dishes;
     private List<String> dishes = new ArrayList<>();
 
-    private List<DrinkHibernate> drinks;
+    private List<String> drinks = new ArrayList<>();
 
     private Long clientId;
 
@@ -35,12 +34,15 @@ public class BillDTO implements Serializable {
         this.date = bill.getDate();
         this.price = bill.getPrice();
         this.tip = bill.getTip();
-        this.drinks = bill.getDrinks();
         this.clientId = bill.getClient().getId();
         this.employeeId = bill.getEmployee().getId();
 
         for (DishHibernate dish : bill.getDishes()) {
             this.dishes.add(dish.getName());
+        }
+
+        for (DrinkHibernate drink : bill.getDrinks()) {
+            this.drinks.add(drink.getName());
         }
     }
 
@@ -87,14 +89,14 @@ public class BillDTO implements Serializable {
         this.dishes = dishes;
     }
 
-    public List<DrinkHibernate> getDrinks() {
+    public List<String> getDrinks() {
         if (this.drinks == null) {
             this.drinks = new ArrayList<>();
         }
         return drinks;
     }
 
-    public void setDrinks(List<DrinkHibernate> drinks) {
+    public void setDrinks(List<String> drinks) {
         this.drinks = drinks;
     }
 

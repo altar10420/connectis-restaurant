@@ -29,8 +29,9 @@ public class EmployeeDTO implements Serializable {
         this.surname = employee.getSurname();
         this.position = employee.getPosition();
         this.salary = employee.getSalary();
-        this.managerId = employee.getManagerId();
         this.pesel = employee.getPesel();
+        this.managerId = employee.getManagerId();
+
     }
 
     public Long getId() {
@@ -89,15 +90,15 @@ public class EmployeeDTO implements Serializable {
         this.pesel = pesel;
     }
 
-    public EmployeeHibernate toDomain() {
-        return new EmployeeHibernate(
-                id,
-                name,
-                surname,
-                position,
-                salary,
-                managerId,
-                pesel
-        );
-    }
+//    public EmployeeHibernate toDomain() {
+//        return new EmployeeHibernate(
+//                id,
+//                name,
+//                surname,
+//                position,
+//                salary,
+//                managerId,
+//                pesel
+//        );
+//    }
 }

@@ -29,14 +29,20 @@ public class EmployeeHibernate {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillHibernate> bills;
 
-    public EmployeeHibernate(Long id, String name, String surname, String position, BigDecimal salary, Long managerId, Long pesel) {
+    public EmployeeHibernate(Long id,
+                             String name,
+                             String surname,
+                             String position,
+                             BigDecimal salary,
+                             Long pesel,
+                             Long managerId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.position = position;
         this.salary = salary;
-        this.managerId = managerId;
         this.pesel = pesel;
+        this.managerId = managerId;
     }
 
     public EmployeeHibernate() {

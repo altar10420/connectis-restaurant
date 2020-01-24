@@ -23,6 +23,8 @@ public interface BillService {
 
     Long addDish(Long billId, Long dishId);
 
+    Long addDrink(Long billId, Long drinkId);
+
 
 
     //TODO other methods

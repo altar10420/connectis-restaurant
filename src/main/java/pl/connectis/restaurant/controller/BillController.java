@@ -63,4 +63,13 @@ public class BillController {
         return billId;
     }
 
+    @PostMapping(path = "/{id}/addDrink")
+    public Long addDrink(@PathVariable("id") Long id,
+                        @RequestParam(name = "drink") Long drinkId) {
+
+        Long billId = billService.addDrink(id, drinkId);
+
+        return billId;
+    }
+
 }

@@ -2,13 +2,8 @@ package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.connectis.restaurant.controller.dto.ClientDTO;
-import pl.connectis.restaurant.controller.dto.EmployeeDTO;
 import pl.connectis.restaurant.domain.*;
-import pl.connectis.restaurant.repository.BillHibernateRepository;
-import pl.connectis.restaurant.repository.ClientHibernateRepository;
-import pl.connectis.restaurant.repository.DishHibernateRepository;
-import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
+import pl.connectis.restaurant.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +16,7 @@ public class BillServiceImpl implements BillService {
 
     private final BillHibernateRepository billRepository;
     private final DishHibernateRepository dishRepository;
+    private final DrinkHibernateRepository drinkRepository;
     private final ClientHibernateRepository clientRepository;
     private final EmployeeHibernateRepository employeeRepository;
 
@@ -28,10 +24,12 @@ public class BillServiceImpl implements BillService {
     @Autowired
     public BillServiceImpl(BillHibernateRepository billRepository,
                            DishHibernateRepository dishRepository,
+                           DrinkHibernateRepository drinkRepository,
                            ClientHibernateRepository clientRepository,
                            EmployeeHibernateRepository employeeRepository) {
         this.billRepository = billRepository;
         this.dishRepository = dishRepository;
+        this.drinkRepository = drinkRepository;
         this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
     }
@@ -126,6 +124,18 @@ public class BillServiceImpl implements BillService {
         BillHibernate bill = billRepository.findById(billId).get();
 
         bill.getDishes().add(dishRepository.findById(dishId).get());
+
+        billRepository.save(bill);
+
+        return billId;
+    }
+
+    @Override
+    public Long addDrink(Long billId, Long drinkId) {
+
+        BillHibernate bill = billRepository.findById(billId).get();
+
+        bill.getDrinks().add(drinkRepository.findById(drinkId).get());
 
         billRepository.save(bill);
 
