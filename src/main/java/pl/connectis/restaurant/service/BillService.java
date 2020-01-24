@@ -1,6 +1,6 @@
 package pl.connectis.restaurant.service;
 
-import pl.connectis.restaurant.domain.BillHibernate;
+import pl.connectis.restaurant.domain.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,18 +13,19 @@ public interface BillService {
             LocalDateTime date,
             BigDecimal price,
             BigDecimal tip,
-            List<Long> dishes
+            List<DishHibernate> dishes,
+            List<DrinkHibernate> drinks,
+            Long clientId,
+            Long employeeId
     );
 
     Optional<BillHibernate> getBill(Long billId);
 
+    Long addDish(Long billId, Long dishId);
+
+
+
     //TODO other methods
 
 
-
-
-//    public BillHibernate(Long id,
-//                         LocalDateTime date,
-//                         BigDecimal price,
-//                         BigDecimal tip) {
 }

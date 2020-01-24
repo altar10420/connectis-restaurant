@@ -1,10 +1,12 @@
 package pl.connectis.restaurant.controller.dto;
 
-import pl.connectis.restaurant.domain.BillHibernate;
+import pl.connectis.restaurant.domain.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BillDTO implements Serializable {
 
@@ -16,6 +18,15 @@ public class BillDTO implements Serializable {
 
     private BigDecimal tip;
 
+//    private List<DishHibernate> dishes;
+    private List<String> dishes = new ArrayList<>();
+
+    private List<DrinkHibernate> drinks;
+
+    private Long clientId;
+
+    private Long employeeId;
+
     public BillDTO() {
     }
 
@@ -24,6 +35,13 @@ public class BillDTO implements Serializable {
         this.date = bill.getDate();
         this.price = bill.getPrice();
         this.tip = bill.getTip();
+        this.drinks = bill.getDrinks();
+        this.clientId = bill.getClient().getId();
+        this.employeeId = bill.getEmployee().getId();
+
+        for (DishHibernate dish : bill.getDishes()) {
+            this.dishes.add(dish.getName());
+        }
     }
 
     public Long getId() {
@@ -56,5 +74,43 @@ public class BillDTO implements Serializable {
 
     public void setTip(BigDecimal tip) {
         this.tip = tip;
+    }
+
+    public List<String> getDishes() {
+        if (this.dishes == null) {
+            this.dishes = new ArrayList<>();
+        }
+        return dishes;
+    }
+
+    public void setDishes(List<String> dishes) {
+        this.dishes = dishes;
+    }
+
+    public List<DrinkHibernate> getDrinks() {
+        if (this.drinks == null) {
+            this.drinks = new ArrayList<>();
+        }
+        return drinks;
+    }
+
+    public void setDrinks(List<DrinkHibernate> drinks) {
+        this.drinks = drinks;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 }

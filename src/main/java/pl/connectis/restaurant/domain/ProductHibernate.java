@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.Objects;
 
 
@@ -17,12 +18,12 @@ public class ProductHibernate {
 
     private String name;
 
-    private int stored_amount;
+    private BigInteger stored_amount;
 
     public ProductHibernate() {
     }
 
-    public ProductHibernate(Long id, String name, int stored_amount) {
+    public ProductHibernate(Long id, String name, BigInteger stored_amount) {
         this.id = id;
         this.name = name;
         this.stored_amount = stored_amount;
@@ -40,11 +41,11 @@ public class ProductHibernate {
         this.name = name;
     }
 
-    public int getStored_amount() {
+    public BigInteger getStored_amount() {
         return stored_amount;
     }
 
-    public void setStored_amount(int stored_amount) {
+    public void setStored_amount(BigInteger stored_amount) {
         this.stored_amount = stored_amount;
     }
 

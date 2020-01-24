@@ -22,9 +22,9 @@ public class BillHibernate {
 
     private BigDecimal tip;
 
-    //TODO check what fetch and cascade should be here
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+// it must be LAZY when multiple ManyToMany - otherwise it wants to get all the objects the same
+// time, and raises MultipleBagFetchException
     @JoinTable(
             name = "dish_bill",
             joinColumns = @JoinColumn(name = "bill_id"),
@@ -33,8 +33,9 @@ public class BillHibernate {
     private List<DishHibernate> dishes;
 
     //TODO check what fetch and cascade should be here
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+// it must be LAZY when multiple ManyToMany - otherwise it wants to get all the objects the same
+// time, and raises MultipleBagFetchException
     @JoinTable(
             name = "drink_bill",
             joinColumns = @JoinColumn(name = "bill_id"),
@@ -56,11 +57,19 @@ public class BillHibernate {
     public BillHibernate(Long id,
                          LocalDateTime date,
                          BigDecimal price,
-                         BigDecimal tip) {
+                         BigDecimal tip,
+                         List<DishHibernate> dishes,
+                         List<DrinkHibernate> drinks,
+                         ClientHibernate client,
+                         EmployeeHibernate employee) {
         this.id = id;
         this.date = date;
         this.price = price;
         this.tip = tip;
+        this.dishes = dishes;
+        this.drinks = drinks;
+        this.client = client;
+        this.employee = employee;
     }
 
     public Long getId() {
@@ -113,6 +122,22 @@ public class BillHibernate {
         this.drinks = drinks;
     }
 
+    public ClientHibernate getClient() {
+        return client;
+    }
+
+    public void setClient(ClientHibernate client) {
+        this.client = client;
+    }
+
+    public EmployeeHibernate getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeHibernate employee) {
+        this.employee = employee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -133,6 +158,10 @@ public class BillHibernate {
                 .add("date=" + date)
                 .add("price=" + price)
                 .add("tip=" + tip)
+                .add("dishes=" + dishes)
+                .add("drinks=" + drinks)
+                .add("client=" + client)
+                .add("employee=" + employee)
                 .toString();
     }
 }

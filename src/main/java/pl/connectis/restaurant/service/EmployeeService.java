@@ -18,7 +18,7 @@ public interface EmployeeService {
             Long managerId
     );
 
-    List<EmployeeHibernate> getEmployeeMenuPage(int page);
+    List<EmployeeHibernate> getEmployeeMenuPage(Integer page);
 
     Optional<EmployeeHibernate> getEmployee(Long id);
 
