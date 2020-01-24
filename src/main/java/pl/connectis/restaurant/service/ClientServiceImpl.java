@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.ClientHibernate;
+import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.repository.ClientHibernateRepository;
 
 import java.math.BigDecimal;
@@ -22,8 +23,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Long createClient(String name, String surname, BigDecimal discount) {
-        return null;
-    }
+
+        ClientHibernate clientHibernate = new ClientHibernate(
+                    null,
+                    name,
+                    surname,
+                    discount
+            );
+
+            clientRepository.save(clientHibernate);
+            return clientHibernate.getId();
+        }
 
     @Override
     public Optional<ClientHibernate> getClient(Long id) {
@@ -32,11 +42,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientHibernate> getAllClient(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public List<ClientHibernate> getClientMenuPage(int page) {
         return null;
     }
 

@@ -25,6 +25,8 @@ public interface BillService {
 
     Long addDrink(Long billId, Long drinkId);
 
+    void removeBill(Long billId);
+
 
 
     //TODO other methods

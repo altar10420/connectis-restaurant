@@ -72,4 +72,11 @@ public class BillController {
         return billId;
     }
 
+    @DeleteMapping(path = "/remove/{id}")
+    public String removeBill(@PathVariable("id") Long id) {
+        billService.removeBill(id);
+        //TODO throw some message/exception if failed
+        return "REMOVED";
+    }
+
 }

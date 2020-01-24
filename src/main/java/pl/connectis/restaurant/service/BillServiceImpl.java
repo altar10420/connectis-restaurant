@@ -123,7 +123,13 @@ public class BillServiceImpl implements BillService {
 
         BillHibernate bill = billRepository.findById(billId).get();
 
-        bill.getDishes().add(dishRepository.findById(dishId).get());
+        DishHibernate dish = dishRepository.findById(dishId).get();
+
+        ClientHibernate client = bill.getClient();
+
+        bill.getDishes().add(dish);
+
+        bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
 
         billRepository.save(bill);
 
@@ -137,8 +143,15 @@ public class BillServiceImpl implements BillService {
 
         bill.getDrinks().add(drinkRepository.findById(drinkId).get());
 
+        bill.setPrice(bill.getPrice().add(drinkRepository.findById(drinkId).get().getPrice()));
+
         billRepository.save(bill);
 
         return billId;
+    }
+
+    @Override
+    public void removeBill(Long billId) {
+        billRepository.deleteById(billId);
     }
 }

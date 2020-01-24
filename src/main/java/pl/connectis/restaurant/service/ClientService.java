@@ -18,7 +18,5 @@ public interface ClientService {
 
     List<ClientHibernate> getAllClient(Pageable pageable);
 
-    List<ClientHibernate> getClientMenuPage(int page);
-
     void removeClient(Long id);
 }

@@ -35,17 +35,6 @@ public class ClientController {
         return new ClientDTO(clientOptional.get());
     }
 
-    @GetMapping(path = "/menu/{page}")
-    public List<ClientDTO> getClientMenuPage(@PathVariable("page") Integer page) {
-        List<ClientHibernate> clientList = clientService.getClientMenuPage(page);
-        List<ClientDTO> clientDTOList = new ArrayList<>();
-
-        for (ClientHibernate client : clientList) {
-            clientDTOList.add(new ClientDTO(client));
-        }
-        return clientDTOList;
-    }
-
     @PostMapping(path = "/")
     public Long createClient(@RequestBody ClientDTO clientDTO) {
         Long clientId = clientService.createClient(
