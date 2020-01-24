@@ -1,9 +1,12 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DishDTO;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.repository.DishHibernateRepository;
 import pl.connectis.restaurant.service.DishService;
 
 import java.util.ArrayList;
@@ -16,9 +19,11 @@ public class DishController {
 
     private final DishService dishService;
 
+    private final DishHibernateRepository dishHibernateRepository;
     @Autowired
-    public DishController(DishService dishService) {
+    public DishController(DishService dishService, DishHibernateRepository dishHibernateRepository) {
         this.dishService = dishService;
+        this.dishHibernateRepository = dishHibernateRepository;
     }
 
     @GetMapping(path = "/{id}")
@@ -50,6 +55,19 @@ public class DishController {
         );
         //TODO throw some message/exception if failed
         return dishId;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DishHibernate> updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO){
+        Optional<DishHibernate> dishHibernateOptional = dishHibernateRepository.findById(id);
+        DishHibernate _dishHibernate = dishHibernateOptional.get();
+        if(dishHibernateOptional.isPresent()){
+            _dishHibernate.setName(drinkDTO.getName());
+            _dishHibernate.setDescription(drinkDTO.getDescription());
+            _dishHibernate.setPrice(drinkDTO.getPrice());
+            _dishHibernate.setAvailable(drinkDTO.getAvailable());
+        }
+        return new ResponseEntity<>(dishHibernateRepository.save(_dishHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/remove/{id}")
