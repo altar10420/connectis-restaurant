@@ -8,5 +8,4 @@ import pl.connectis.restaurant.domain.DishHibernate;
 public interface DishHibernateRepository
         extends PagingAndSortingRepository<DishHibernate, Long> {
 
-    Page<DishHibernate> findByNameContaining(String partOfName, Pageable pageable);
 }

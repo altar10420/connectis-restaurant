@@ -6,5 +6,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import pl.connectis.restaurant.domain.ProductHibernate;
 
 public interface ProductHibernateRepository extends PagingAndSortingRepository<ProductHibernate, Long> {
-    Page<ProductHibernate> findByNameContaining(String partOfName, Pageable pageable);
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.ClientHibernate;
-import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.repository.ClientHibernateRepository;
 
 import java.math.BigDecimal;
@@ -47,6 +46,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void removeClient(Long id) {
-
+        clientRepository.deleteById(id);
     }
 }

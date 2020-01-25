@@ -7,5 +7,4 @@ import pl.connectis.restaurant.domain.EmployeeHibernate;
 
 public interface EmployeeHibernateRepository extends PagingAndSortingRepository<EmployeeHibernate, Long> {
 
-    Page<EmployeeHibernate> findByNameContaining(String partOfName, Pageable pageable);
 }

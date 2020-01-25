@@ -7,5 +7,4 @@ import pl.connectis.restaurant.domain.DrinkHibernate;
 
 public interface DrinkHibernateRepository extends PagingAndSortingRepository<DrinkHibernate, Long> {
 
-    Page<DrinkHibernate> findByNameContaining(String partOfName, Pageable pageable);
 }

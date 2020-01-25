@@ -44,7 +44,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeHibernate> updateDrink(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<EmployeeHibernate> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO){
         Optional<EmployeeHibernate> employeeHibernateOptional = employeeHibernateRepository.findById(id);
         EmployeeHibernate _employeeHibernate = employeeHibernateOptional.get();
         if(employeeHibernateOptional.isPresent()){
