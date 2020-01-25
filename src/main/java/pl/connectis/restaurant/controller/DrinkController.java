@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DrinkDTO;
 import pl.connectis.restaurant.domain.DrinkHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.service.DrinkService;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
 
@@ -58,17 +59,20 @@ public class DrinkController {
 
     @PutMapping("/{id}")
     public void updateDrink(@PathVariable("id") Long id, @RequestBody DrinkDTO drinkDTO) {
-        Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
-        DrinkHibernate drinkHibernate = drinkHibernateOptional.get();
 
-        drinkHibernate.setName(drinkDTO.getName());
-        drinkHibernate.setDescription(drinkDTO.getDescription());
-        drinkHibernate.setPrice(drinkDTO.getPrice());
-        drinkHibernate.setAvailable(drinkDTO.getAvailable());
-        drinkHibernate.setPortion_ml(drinkDTO.getPortion_ml());
 
-        drinkHibernateRepository.save(drinkHibernate);
-//                return new ResponseEntity<>(drinkHibernateRepository.save(drinkHibernate), HttpStatus.OK);
+        Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
+
+        if(!drinkOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+
+        drinkService.updateDrink(id,
+                drinkDTO.getName(),
+                drinkDTO.getDescription(),
+                drinkDTO.getPrice(),
+                drinkDTO.getAvailable(),
+                drinkDTO.getPortion_ml());
     }
 
     @DeleteMapping(path = "/{id}")
