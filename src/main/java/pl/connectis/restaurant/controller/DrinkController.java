@@ -59,15 +59,15 @@ public class DrinkController {
     @PutMapping("/{id}")
     public ResponseEntity<DrinkHibernate> updateDrink(@PathVariable("id") Long id, @RequestBody DrinkDTO drinkDTO){
         Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
-        DrinkHibernate _drinkHibernate = drinkHibernateOptional.get();
+        DrinkHibernate drinkHibernate = drinkHibernateOptional.get();
                 if(drinkHibernateOptional.isPresent()){
-                    _drinkHibernate.setName(drinkDTO.getName());
-                    _drinkHibernate.setDescription(drinkDTO.getDescription());
-                    _drinkHibernate.setPrice(drinkDTO.getPrice());
-                    _drinkHibernate.setAvailable(drinkDTO.getAvailable());
-                    _drinkHibernate.setPortion_ml(drinkDTO.getPortion_ml());
+                    drinkHibernate.setName(drinkDTO.getName());
+                    drinkHibernate.setDescription(drinkDTO.getDescription());
+                    drinkHibernate.setPrice(drinkDTO.getPrice());
+                    drinkHibernate.setAvailable(drinkDTO.getAvailable());
+                    drinkHibernate.setPortion_ml(drinkDTO.getPortion_ml());
                 }
-                return new ResponseEntity<>(drinkHibernateRepository.save(_drinkHibernate), HttpStatus.OK);
+                return new ResponseEntity<>(drinkHibernateRepository.save(drinkHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
