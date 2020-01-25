@@ -62,7 +62,7 @@ public class EmployeeHibernate {
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
@@ -70,7 +70,7 @@ public class EmployeeHibernate {
     }
 
     public String getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(String position) {
@@ -86,7 +86,7 @@ public class EmployeeHibernate {
     }
 
     public Long getManagerId() {
-        return managerId;
+        return this.managerId;
     }
 
     public void setManagerId(Long managerId) {
@@ -126,4 +126,6 @@ public class EmployeeHibernate {
                 ", pesel=" + pesel +
                 '}';
     }
+
+
 }

@@ -22,5 +22,7 @@ public interface DishService {
 
     List<DishHibernate> getDishMenuPage(int page);
 
+    void updateDish(Long id, String name, String description, BigDecimal price, Boolean isAvailable);
+
     void removeDish(Long id);
 }

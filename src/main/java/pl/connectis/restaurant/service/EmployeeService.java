@@ -22,5 +22,7 @@ public interface EmployeeService {
 
     List<EmployeeHibernate> getAllEmployee(Pageable pageable);
 
+    void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId);
+
     void removeEmployee(Long id);
 }

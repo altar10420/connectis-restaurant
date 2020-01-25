@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.controller.dto.EmployeeDTO;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 import pl.connectis.restaurant.service.EmployeeService;
 
@@ -39,23 +41,28 @@ public class EmployeeController {
                 employeeDTO.getSalary(),
                 employeeDTO.getPesel(),
                 employeeDTO.getManagerId()
-                );
+        );
         return employeeId;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeHibernate> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO){
+    public void updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO) {
         Optional<EmployeeHibernate> employeeHibernateOptional = employeeHibernateRepository.findById(id);
-        EmployeeHibernate _employeeHibernate = employeeHibernateOptional.get();
-        if(employeeHibernateOptional.isPresent()){
-            _employeeHibernate.setName(employeeDTO.getName());
-            _employeeHibernate.setSurname(employeeDTO.getSurname());
-            _employeeHibernate.setPosition(employeeDTO.getPosition());
-            _employeeHibernate.setSalary(employeeDTO.getSalary());
-            _employeeHibernate.setManagerId(employeeDTO.getManagerId());
-            _employeeHibernate.setPesel(employeeDTO.getPesel());
-        }
-        return new ResponseEntity<>(employeeHibernateRepository.save(_employeeHibernate), HttpStatus.OK);
+        EmployeeHibernate employeeHibernate = employeeHibernateOptional.get();
+
+//        if (!employeeHibernateOptional.isPresent()){
+//            throw new EntityDoesNotExistException();
+//        }
+
+
+        employeeHibernate.setName(employeeDTO.getName());
+        employeeHibernate.setSurname(employeeDTO.getSurname());
+        employeeHibernate.setPosition(employeeDTO.getPosition());
+        employeeHibernate.setSalary(employeeDTO.getSalary());
+        employeeHibernate.setManagerId(employeeDTO.getManagerId());
+        employeeHibernate.setPesel(employeeDTO.getPesel());
+
+//        return new ResponseEntity<>(employeeHibernateRepository.save(employeeHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")

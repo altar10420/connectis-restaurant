@@ -3,8 +3,12 @@ package pl.connectis.restaurant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 
 import java.math.BigDecimal;
@@ -56,6 +60,27 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(this::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId){
+        Optional<EmployeeHibernate> optionalEmployeeHibernate = employeeHibernateRepository.findById(id);
+        if (!optionalEmployeeHibernate.isPresent()){
+            throw new EntityDoesNotExistException();
+        }
+
+        EmployeeHibernate employeeHibernate = optionalEmployeeHibernate.get();
+        employeeHibernate.setName(name);
+        employeeHibernate.setSurname(surname);
+        employeeHibernate.setPosition(position);
+        employeeHibernate.setPesel(pesel);
+        employeeHibernate.setManagerId(managerId);
+
+        employeeHibernateRepository.save(employeeHibernate);
+    }
+
+
+
 
     @Override
     public void removeEmployee(Long id) {
