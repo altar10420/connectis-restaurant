@@ -3,6 +3,7 @@ package pl.connectis.restaurant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.connectis.restaurant.domain.*;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.*;
 
 import java.math.BigDecimal;
@@ -44,51 +45,15 @@ public class BillServiceImpl implements BillService {
             Long clientId,
             Long employeeId) {
 
-//        List<DishHibernate> dishList = new ArrayList<>();
-//        for (Long dishId: dishes) {
-//            Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
-//            if (!dishOptional.isPresent()) {
-//                System.out.println("No entity!");
-//            }
-//            dishList.add(dishOptional.get());
-//        }
-
-//        BillHibernate bill = new BillHibernate(
-//                null,
-//                date,
-//                price,
-//                tip
-//        );
         Optional<ClientHibernate> clientOptional = clientRepository.findById(clientId);
         if (!clientOptional.isPresent()) {
-            //TODO some exception here???
-            System.out.println("NOT FOUND");
+            throw new EntityDoesNotExistException();
         }
-
-//        //TODO should I use DTO here?
-//        ClientDTO clientDTO = new ClientDTO(
-//                clientOptional.get().getId(),
-//                clientOptional.get().getName(),
-//                clientOptional.get().getSurname(),
-//                clientOptional.get().getDiscount()
-//        );
 
         Optional<EmployeeHibernate> employeeOptional = employeeRepository.findById(employeeId);
         if (!employeeOptional.isPresent()) {
-            //TODO some exception here???
-            System.out.println("NOT FOUND");
+            throw new EntityDoesNotExistException();
         }
-
-//        //TODO should I use DTO here?
-//        EmployeeDTO employeeDTO = new EmployeeDTO(
-//                employeeOptional.get().getId(),
-//                employeeOptional.get().getName(),
-//                employeeOptional.get().getSurname(),
-//                employeeOptional.get().getPosition(),
-//                employeeOptional.get().getSalary(),
-//                employeeOptional.get().getManagerId(),
-//                employeeOptional.get().getPesel()
-//        );
 
         BillHibernate bill = new BillHibernate(
             null,
@@ -99,14 +64,7 @@ public class BillServiceImpl implements BillService {
                 new ArrayList<>(),
                 clientOptional.get(),
                 employeeOptional.get()
-//                null,
-//                null
-
-
         );
-
-//        bill.setClient(clientDTO.toHibernate(clientDTO));
-//        bill.setDishes(dishList);
 
         billRepository.save(bill);
 
@@ -115,21 +73,42 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Optional<BillHibernate> getBill(Long billId) {
+
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new EntityDoesNotExistException("Bill does not exist");
+        }
         return billRepository.findById(billId);
     }
 
     @Override
     public Long addDish(Long billId, Long dishId) {
 
-        BillHibernate bill = billRepository.findById(billId).get();
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
 
-        DishHibernate dish = dishRepository.findById(dishId).get();
+        Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
+        if (!dishOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+
+        BillHibernate bill = billOptional.get();
+
+        DishHibernate dish = dishOptional.get();
 
         ClientHibernate client = bill.getClient();
 
         bill.getDishes().add(dish);
 
         bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
+
+        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+
+        bill.setPrice(bill.getPrice().add(tip));
+
+        bill.setTip(tip);
 
         billRepository.save(bill);
 
@@ -139,11 +118,31 @@ public class BillServiceImpl implements BillService {
     @Override
     public Long addDrink(Long billId, Long drinkId) {
 
-        BillHibernate bill = billRepository.findById(billId).get();
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
 
-        bill.getDrinks().add(drinkRepository.findById(drinkId).get());
+        Optional<DrinkHibernate> drinkOptional = drinkRepository.findById(drinkId);
+        if (!drinkOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
 
-        bill.setPrice(bill.getPrice().add(drinkRepository.findById(drinkId).get().getPrice()));
+        BillHibernate bill = billOptional.get();
+
+        DrinkHibernate drink = drinkOptional.get();
+
+        ClientHibernate client = bill.getClient();
+
+        bill.getDrinks().add(drink);
+
+        bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())));
+
+        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+
+        bill.setPrice(bill.getPrice().add(tip));
+
+        bill.setTip(tip);
 
         billRepository.save(bill);
 
@@ -152,6 +151,12 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void removeBill(Long billId) {
+
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+
         billRepository.deleteById(billId);
     }
 }

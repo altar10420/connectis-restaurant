@@ -3,11 +3,8 @@ package pl.connectis.restaurant.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.BillDTO;
-import pl.connectis.restaurant.controller.dto.ClientDTO;
 import pl.connectis.restaurant.domain.BillHibernate;
 import pl.connectis.restaurant.service.BillService;
-import pl.connectis.restaurant.service.ClientService;
-import pl.connectis.restaurant.service.EmployeeService;
 
 import java.util.Optional;
 
@@ -16,17 +13,10 @@ import java.util.Optional;
 public class BillController {
 
     private final BillService billService;
-    //TODO is this ok to have Client and Employee service in BillController?
-    private final ClientService clientService;
-    private final EmployeeService employeeService;
 
     @Autowired
-    public BillController(BillService billService,
-                          ClientService clientService,
-                          EmployeeService employeeService) {
+    public BillController(BillService billService) {
         this.billService = billService;
-        this.clientService = clientService;
-        this.employeeService = employeeService;
     }
 
     @GetMapping(path = "/{id}")
