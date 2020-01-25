@@ -20,6 +20,7 @@ public class DishController {
     private final DishService dishService;
 
     private final DishHibernateRepository dishHibernateRepository;
+
     @Autowired
     public DishController(DishService dishService, DishHibernateRepository dishHibernateRepository) {
         this.dishService = dishService;
@@ -58,15 +59,16 @@ public class DishController {
     }
 
     @PutMapping("/{id}")
-    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO){
+    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO) {
         Optional<DishHibernate> dishHibernateOptional = dishHibernateRepository.findById(id);
         DishHibernate dishHibernate = dishHibernateOptional.get();
 
-            dishHibernate.setName(drinkDTO.getName());
-            dishHibernate.setDescription(drinkDTO.getDescription());
-            dishHibernate.setPrice(drinkDTO.getPrice());
-            dishHibernate.setAvailable(drinkDTO.getAvailable());
+        dishHibernate.setName(drinkDTO.getName());
+        dishHibernate.setDescription(drinkDTO.getDescription());
+        dishHibernate.setPrice(drinkDTO.getPrice());
+        dishHibernate.setAvailable(drinkDTO.getAvailable());
 
+        dishHibernateRepository.save(dishHibernate);
 //        return new ResponseEntity<>(dishHibernateRepository.save(dishHibernate), HttpStatus.OK);
     }
 

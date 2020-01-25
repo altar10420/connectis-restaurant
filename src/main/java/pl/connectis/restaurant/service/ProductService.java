@@ -19,5 +19,7 @@ public interface ProductService {
 
     List<ProductHibernate> getProductMenuPage(int page);
 
+    void updateProduct(Long id, String name, BigInteger stored_amount);
+
     void removeProduct(Long id);
 }
