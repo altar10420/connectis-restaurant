@@ -90,15 +90,4 @@ public class EmployeeDTO implements Serializable {
         this.pesel = pesel;
     }
 
-//    public EmployeeHibernate toDomain() {
-//        return new EmployeeHibernate(
-//                id,
-//                name,
-//                surname,
-//                position,
-//                salary,
-//                managerId,
-//                pesel
-//        );
-//    }
 }

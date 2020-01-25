@@ -27,7 +27,12 @@ public class DrinkHibernate {
     @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 
-    public DrinkHibernate(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml) {
+    public DrinkHibernate(Long id,
+                          String name,
+                          String description,
+                          BigDecimal price,
+                          Boolean isAvailable,
+                          BigDecimal portion_ml) {
         this.id = id;
         this.name = name;
         this.description = description;

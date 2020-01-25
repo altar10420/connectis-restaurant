@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.ClientDTO;
 import pl.connectis.restaurant.domain.ClientHibernate;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.ClientHibernateRepository;
 import pl.connectis.restaurant.service.ClientService;
@@ -63,10 +64,13 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String removeClient(@PathVariable("id") Long id) {
+    public void removeClient(@PathVariable("id") Long id) {
+        Optional<ClientHibernate> clientOptional = clientHibernateRepository.findById(id);
+
+        if(!clientOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         clientService.removeClient(id);
-        //TODO throw some message/exception if failed
-        return "REMOVED";
     }
 }
 

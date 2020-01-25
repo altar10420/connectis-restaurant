@@ -64,11 +64,10 @@ public class DishDTO implements Serializable {
         return isAvailable;
     }
 
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
+    public void setAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
-    //TODO check if this is even necessary in this design pattern???
     public DishHibernate toDomain() {
         return new DishHibernate(
                 id,

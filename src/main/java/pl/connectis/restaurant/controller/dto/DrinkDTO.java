@@ -1,5 +1,6 @@
 package pl.connectis.restaurant.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class DrinkDTO implements Serializable {
 
     private BigDecimal price;
 
+    @JsonProperty("isAvailable")
     private Boolean isAvailable;
 
     private BigDecimal portion_ml;

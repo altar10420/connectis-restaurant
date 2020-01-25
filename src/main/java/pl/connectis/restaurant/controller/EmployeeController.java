@@ -27,8 +27,11 @@ public class EmployeeController {
 
     @GetMapping(path = "/{id}")
     public EmployeeDTO getEmployee(@PathVariable("id") Long id) {
-        Optional<EmployeeHibernate> employeeOptional = employeeService.getEmployee(id);
-        //TODO throw some exception if failed to get
+        Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
+
+        if(!employeeOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         return new EmployeeDTO(employeeOptional.get());
     }
 
@@ -63,9 +66,13 @@ public class EmployeeController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String removeEmployee(@PathVariable("id") Long id) {
+    public void removeEmployee(@PathVariable("id") Long id) {
+
+        Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
+
+        if(!employeeOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         employeeService.removeEmployee(id);
-        //TODO throw some message/exception if failed
-        return "REMOVED";
     }
 }
