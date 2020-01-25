@@ -47,23 +47,19 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public void updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO) {
-        Optional<EmployeeHibernate> employeeHibernateOptional = employeeHibernateRepository.findById(id);
-        EmployeeHibernate employeeHibernate = employeeHibernateOptional.get();
+        Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
 
-//        if (!employeeHibernateOptional.isPresent()){
-//            throw new EntityDoesNotExistException();
-//        }
+        if(!employeeOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
 
-
-        employeeHibernate.setName(employeeDTO.getName());
-        employeeHibernate.setSurname(employeeDTO.getSurname());
-        employeeHibernate.setPosition(employeeDTO.getPosition());
-        employeeHibernate.setSalary(employeeDTO.getSalary());
-        employeeHibernate.setManagerId(employeeDTO.getManagerId());
-        employeeHibernate.setPesel(employeeDTO.getPesel());
-
-        employeeHibernateRepository.save(employeeHibernate);
-//        return new ResponseEntity<>(employeeHibernateRepository.save(employeeHibernate), HttpStatus.OK);
+        employeeService.updateEmployee(id,
+                employeeDTO.getName(),
+                employeeDTO.getSurname(),
+                employeeDTO.getPosition(),
+                employeeDTO.getSalary(),
+                employeeDTO.getPesel(),
+                employeeDTO.getManagerId());
     }
 
     @DeleteMapping(path = "/{id}")
