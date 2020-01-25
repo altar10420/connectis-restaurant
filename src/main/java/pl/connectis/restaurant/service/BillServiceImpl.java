@@ -1,10 +1,9 @@
 package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.domain.*;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.*;
 
 import java.math.BigDecimal;
@@ -48,12 +47,12 @@ public class BillServiceImpl implements BillService {
 
         Optional<ClientHibernate> clientOptional = clientRepository.findById(clientId);
         if (!clientOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         Optional<EmployeeHibernate> employeeOptional = employeeRepository.findById(employeeId);
         if (!employeeOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         BillHibernate bill = new BillHibernate(
@@ -74,6 +73,11 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Optional<BillHibernate> getBill(Long billId) {
+
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new EntityDoesNotExistException("Bill does not exist");
+        }
         return billRepository.findById(billId);
     }
 
@@ -82,12 +86,12 @@ public class BillServiceImpl implements BillService {
 
         Optional<BillHibernate> billOptional = billRepository.findById(billId);
         if (!billOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
         if (!dishOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         BillHibernate bill = billOptional.get();
@@ -96,11 +100,13 @@ public class BillServiceImpl implements BillService {
 
         ClientHibernate client = bill.getClient();
 
-        BigDecimal tip = new BigDecimal(String.valueOf(dish.getPrice())).multiply(new BigDecimal(0.05));
-
         bill.getDishes().add(dish);
 
-        bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())).add(tip));
+        bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
+
+        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+
+        bill.setPrice(bill.getPrice().add(tip));
 
         bill.setTip(tip);
 
@@ -114,12 +120,12 @@ public class BillServiceImpl implements BillService {
 
         Optional<BillHibernate> billOptional = billRepository.findById(billId);
         if (!billOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         Optional<DrinkHibernate> drinkOptional = drinkRepository.findById(drinkId);
         if (!drinkOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         BillHibernate bill = billOptional.get();
@@ -128,11 +134,13 @@ public class BillServiceImpl implements BillService {
 
         ClientHibernate client = bill.getClient();
 
-        BigDecimal tip = new BigDecimal(String.valueOf(drink.getPrice())).multiply(new BigDecimal(0.02));
-
         bill.getDrinks().add(drink);
 
-        bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())).add(tip));
+        bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())));
+
+        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+
+        bill.setPrice(bill.getPrice().add(tip));
 
         bill.setTip(tip);
 
@@ -146,7 +154,7 @@ public class BillServiceImpl implements BillService {
 
         Optional<BillHibernate> billOptional = billRepository.findById(billId);
         if (!billOptional.isPresent()) {
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         billRepository.deleteById(billId);
