@@ -1,6 +1,5 @@
 package pl.connectis.restaurant.service;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.ProductHibernate;
@@ -23,17 +22,23 @@ public class ProductServiceImpl implements pl.connectis.restaurant.service.Produ
 
     @Override
     public Long createProduct(String name, BigInteger stored_amount) {
-        return null;
+            ProductHibernate productHibernate = new ProductHibernate(
+                    null,
+                    name,
+                    stored_amount
+            );
+
+            productHibernateRepository.save(productHibernate);
+            return productHibernate.getId();
     }
 
     @Override
     public Optional<ProductHibernate> getProduct(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<ProductHibernate> getAllProduct(Pageable pageable) {
-        return null;
+        Optional<ProductHibernate> productOptional = productHibernateRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        return productHibernateRepository.findById(id);
     }
 
     @Override
@@ -58,7 +63,7 @@ public class ProductServiceImpl implements pl.connectis.restaurant.service.Produ
 
     @Override
     public void removeProduct(Long id) {
-
+        productHibernateRepository.deleteById(id);
     }
 
     public ProductHibernate toDomain(ProductHibernate hibernate) {

@@ -37,7 +37,6 @@ public class BillController {
                 employeeId
         );
 
-        //TODO throw some message/exception if failed
         return billId;
     }
 
@@ -59,11 +58,9 @@ public class BillController {
         return billId;
     }
 
-    @DeleteMapping(path = "/remove/{id}")
-    public String removeBill(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    public void removeBill(@PathVariable("id") Long id) {
         billService.removeBill(id);
-        //TODO throw some message/exception if failed
-        return "REMOVED";
     }
 
 }

@@ -27,9 +27,4 @@ public interface BillService {
 
     void removeBill(Long billId);
 
-
-
-    //TODO other methods
-
-
 }

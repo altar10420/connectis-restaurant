@@ -1,16 +1,13 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.ProductDTO;
 import pl.connectis.restaurant.domain.ProductHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.ProductHibernateRepository;
 import pl.connectis.restaurant.service.ProductService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,9 +25,7 @@ public class ProductController {
 
     @GetMapping(path = "/{id}")
     public ProductDTO getProduct(@PathVariable("id") Long id) {
-        Optional<ProductHibernate> productOptional = productService.getProduct(id);
-        //TODO throw some exception if failed
-        return new ProductDTO(productOptional.get());
+        return new ProductDTO(productService.getProduct(id).get());
     }
 
     @PostMapping(path = "/")
@@ -39,26 +34,25 @@ public class ProductController {
                 productDTO.getName(),
                 productDTO.getStored_amount()
         );
-        //TODO throw some message/exception if failed
         return productId;
     }
 
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
-        Optional<ProductHibernate> productHibernateOptional = productHibernateRepository.findById(id);
-        ProductHibernate productHibernate = productHibernateOptional.get();
 
-        productHibernate.setName(productDTO.getName());
-        productHibernate.setStored_amount(productDTO.getStored_amount());
+        Optional<ProductHibernate> productOptional = productHibernateRepository.findById(id);
 
-        productHibernateRepository.save(productHibernate);
-//        return new ResponseEntity<>(productHibernateRepository.save(_productHibernate), HttpStatus.OK);
+        if(!productOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        productService.updateProduct(id,
+                productDTO.getName(),
+                productDTO.getStored_amount()
+        );
     }
 
-    @DeleteMapping(path = "/remove/{id}")
-    public String removeProduct(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    public void removeProduct(@PathVariable("id") Long id) {
         productService.removeProduct(id);
-        //TODO throw some message/exception if failed
-        return "REMOVED";
     }
 }

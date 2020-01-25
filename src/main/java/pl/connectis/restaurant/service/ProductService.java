@@ -15,8 +15,6 @@ public interface ProductService {
 
     Optional<ProductHibernate> getProduct(Long id);
 
-    List<ProductHibernate> getAllProduct(Pageable pageable);
-
     List<ProductHibernate> getProductMenuPage(int page);
 
     void updateProduct(Long id, String name, BigInteger stored_amount);
