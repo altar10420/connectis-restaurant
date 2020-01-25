@@ -1,7 +1,9 @@
 package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.domain.*;
 import pl.connectis.restaurant.repository.*;
 
@@ -44,51 +46,15 @@ public class BillServiceImpl implements BillService {
             Long clientId,
             Long employeeId) {
 
-//        List<DishHibernate> dishList = new ArrayList<>();
-//        for (Long dishId: dishes) {
-//            Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
-//            if (!dishOptional.isPresent()) {
-//                System.out.println("No entity!");
-//            }
-//            dishList.add(dishOptional.get());
-//        }
-
-//        BillHibernate bill = new BillHibernate(
-//                null,
-//                date,
-//                price,
-//                tip
-//        );
         Optional<ClientHibernate> clientOptional = clientRepository.findById(clientId);
         if (!clientOptional.isPresent()) {
-            //TODO some exception here???
-            System.out.println("NOT FOUND");
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
-
-//        //TODO should I use DTO here?
-//        ClientDTO clientDTO = new ClientDTO(
-//                clientOptional.get().getId(),
-//                clientOptional.get().getName(),
-//                clientOptional.get().getSurname(),
-//                clientOptional.get().getDiscount()
-//        );
 
         Optional<EmployeeHibernate> employeeOptional = employeeRepository.findById(employeeId);
         if (!employeeOptional.isPresent()) {
-            //TODO some exception here???
-            System.out.println("NOT FOUND");
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
-
-//        //TODO should I use DTO here?
-//        EmployeeDTO employeeDTO = new EmployeeDTO(
-//                employeeOptional.get().getId(),
-//                employeeOptional.get().getName(),
-//                employeeOptional.get().getSurname(),
-//                employeeOptional.get().getPosition(),
-//                employeeOptional.get().getSalary(),
-//                employeeOptional.get().getManagerId(),
-//                employeeOptional.get().getPesel()
-//        );
 
         BillHibernate bill = new BillHibernate(
             null,
@@ -99,14 +65,7 @@ public class BillServiceImpl implements BillService {
                 new ArrayList<>(),
                 clientOptional.get(),
                 employeeOptional.get()
-//                null,
-//                null
-
-
         );
-
-//        bill.setClient(clientDTO.toHibernate(clientDTO));
-//        bill.setDishes(dishList);
 
         billRepository.save(bill);
 
@@ -121,15 +80,29 @@ public class BillServiceImpl implements BillService {
     @Override
     public Long addDish(Long billId, Long dishId) {
 
-        BillHibernate bill = billRepository.findById(billId).get();
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
 
-        DishHibernate dish = dishRepository.findById(dishId).get();
+        Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
+        if (!dishOptional.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
+
+        BillHibernate bill = billOptional.get();
+
+        DishHibernate dish = dishOptional.get();
 
         ClientHibernate client = bill.getClient();
 
+        BigDecimal tip = new BigDecimal(String.valueOf(dish.getPrice())).multiply(new BigDecimal(0.05));
+
         bill.getDishes().add(dish);
 
-        bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
+        bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())).add(tip));
+
+        bill.setTip(tip);
 
         billRepository.save(bill);
 
@@ -139,11 +112,29 @@ public class BillServiceImpl implements BillService {
     @Override
     public Long addDrink(Long billId, Long drinkId) {
 
-        BillHibernate bill = billRepository.findById(billId).get();
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
 
-        bill.getDrinks().add(drinkRepository.findById(drinkId).get());
+        Optional<DrinkHibernate> drinkOptional = drinkRepository.findById(drinkId);
+        if (!drinkOptional.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
 
-        bill.setPrice(bill.getPrice().add(drinkRepository.findById(drinkId).get().getPrice()));
+        BillHibernate bill = billOptional.get();
+
+        DrinkHibernate drink = drinkOptional.get();
+
+        ClientHibernate client = bill.getClient();
+
+        BigDecimal tip = new BigDecimal(String.valueOf(drink.getPrice())).multiply(new BigDecimal(0.02));
+
+        bill.getDrinks().add(drink);
+
+        bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())).add(tip));
+
+        bill.setTip(tip);
 
         billRepository.save(bill);
 
@@ -152,6 +143,12 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void removeBill(Long billId) {
+
+        Optional<BillHibernate> billOptional = billRepository.findById(billId);
+        if (!billOptional.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+        }
+
         billRepository.deleteById(billId);
     }
 }
