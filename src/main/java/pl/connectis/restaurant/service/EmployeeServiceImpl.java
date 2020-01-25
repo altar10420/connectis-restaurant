@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 
 import java.math.BigDecimal;
@@ -65,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId){
         Optional<EmployeeHibernate> optionalEmployeeHibernate = employeeHibernateRepository.findById(id);
         if (!optionalEmployeeHibernate.isPresent()){
-            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            throw new EntityDoesNotExistException();
         }
 
         EmployeeHibernate employeeHibernate = optionalEmployeeHibernate.get();

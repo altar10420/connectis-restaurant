@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.controller.dto.EmployeeDTO;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 import pl.connectis.restaurant.service.EmployeeService;
 
@@ -40,28 +41,28 @@ public class EmployeeController {
                 employeeDTO.getSalary(),
                 employeeDTO.getPesel(),
                 employeeDTO.getManagerId()
-                );
+        );
         return employeeId;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeHibernate> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO){
+    public void updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO) {
         Optional<EmployeeHibernate> employeeHibernateOptional = employeeHibernateRepository.findById(id);
         EmployeeHibernate employeeHibernate = employeeHibernateOptional.get();
 
 //        if (!employeeHibernateOptional.isPresent()){
-//            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+//            throw new EntityDoesNotExistException();
 //        }
 
 
-            employeeHibernate.setName(employeeDTO.getName());
-            employeeHibernate.setSurname(employeeDTO.getSurname());
-            employeeHibernate.setPosition(employeeDTO.getPosition());
-            employeeHibernate.setSalary(employeeDTO.getSalary());
-            employeeHibernate.setManagerId(employeeDTO.getManagerId());
-            employeeHibernate.setPesel(employeeDTO.getPesel());
+        employeeHibernate.setName(employeeDTO.getName());
+        employeeHibernate.setSurname(employeeDTO.getSurname());
+        employeeHibernate.setPosition(employeeDTO.getPosition());
+        employeeHibernate.setSalary(employeeDTO.getSalary());
+        employeeHibernate.setManagerId(employeeDTO.getManagerId());
+        employeeHibernate.setPesel(employeeDTO.getPesel());
 
-        return new ResponseEntity<>(employeeHibernateRepository.save(employeeHibernate), HttpStatus.OK);
+//        return new ResponseEntity<>(employeeHibernateRepository.save(employeeHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")

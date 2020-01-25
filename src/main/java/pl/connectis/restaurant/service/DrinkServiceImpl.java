@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DrinkHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
 
 import java.math.BigDecimal;
@@ -71,6 +72,10 @@ public class DrinkServiceImpl implements DrinkService {
     @Transactional
     public void updateDrink(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml) {
         Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
+
+        if (!drinkHibernateOptional.isPresent()){
+            throw new EntityDoesNotExistException();
+        }
 
         DrinkHibernate drinkHibernate = drinkHibernateOptional.get();
         drinkHibernate.setName(name);

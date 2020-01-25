@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.domain.EmployeeHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
 
 import java.math.BigDecimal;
@@ -62,6 +65,21 @@ public class DishServiceImpl implements DishService {
         return hibernates.stream()
                 .map(this::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateDish(Long id, String name, String description, BigDecimal price, Boolean isAvailable){
+        Optional<DishHibernate> optionalDishHibernate = dishHibernateRepository.findById(id);
+        if (!optionalDishHibernate.isPresent()){
+            throw new EntityDoesNotExistException();
+        }
+
+        DishHibernate dishHibernate = optionalDishHibernate.get();
+        dishHibernate.setName(name);
+        dishHibernate.setDescription(description);
+        dishHibernate.setPrice(price);
+        dishHibernate.setAvailable(isAvailable);
     }
 
     @Override

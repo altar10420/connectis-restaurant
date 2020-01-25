@@ -58,16 +58,16 @@ public class DishController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DishHibernate> updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO){
+    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO){
         Optional<DishHibernate> dishHibernateOptional = dishHibernateRepository.findById(id);
-        DishHibernate _dishHibernate = dishHibernateOptional.get();
-        if(dishHibernateOptional.isPresent()){
-            _dishHibernate.setName(drinkDTO.getName());
-            _dishHibernate.setDescription(drinkDTO.getDescription());
-            _dishHibernate.setPrice(drinkDTO.getPrice());
-            _dishHibernate.setAvailable(drinkDTO.getAvailable());
-        }
-        return new ResponseEntity<>(dishHibernateRepository.save(_dishHibernate), HttpStatus.OK);
+        DishHibernate dishHibernate = dishHibernateOptional.get();
+
+            dishHibernate.setName(drinkDTO.getName());
+            dishHibernate.setDescription(drinkDTO.getDescription());
+            dishHibernate.setPrice(drinkDTO.getPrice());
+            dishHibernate.setAvailable(drinkDTO.getAvailable());
+
+//        return new ResponseEntity<>(dishHibernateRepository.save(dishHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/remove/{id}")
