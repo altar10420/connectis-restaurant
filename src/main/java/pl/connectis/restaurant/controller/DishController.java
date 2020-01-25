@@ -21,6 +21,7 @@ public class DishController {
     private final DishService dishService;
 
     private final DishHibernateRepository dishHibernateRepository;
+
     @Autowired
     public DishController(DishService dishService, DishHibernateRepository dishHibernateRepository) {
         this.dishService = dishService;
@@ -62,6 +63,7 @@ public class DishController {
     }
 
     @PutMapping("/{id}")
+
     public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO dishDTO){
         Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 

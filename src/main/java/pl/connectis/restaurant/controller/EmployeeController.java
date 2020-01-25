@@ -62,6 +62,7 @@ public class EmployeeController {
         employeeHibernate.setManagerId(employeeDTO.getManagerId());
         employeeHibernate.setPesel(employeeDTO.getPesel());
 
+        employeeHibernateRepository.save(employeeHibernate);
 //        return new ResponseEntity<>(employeeHibernateRepository.save(employeeHibernate), HttpStatus.OK);
     }
 

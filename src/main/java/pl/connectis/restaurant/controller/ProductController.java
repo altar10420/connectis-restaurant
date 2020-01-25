@@ -44,14 +44,15 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductHibernate> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO){
+    public void updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
         Optional<ProductHibernate> productHibernateOptional = productHibernateRepository.findById(id);
-        ProductHibernate _productHibernate = productHibernateOptional.get();
-        if(productHibernateOptional.isPresent()){
-            _productHibernate.setName(productDTO.getName());
-            _productHibernate.setStored_amount(productDTO.getStored_amount());
-        }
-        return new ResponseEntity<>(productHibernateRepository.save(_productHibernate), HttpStatus.OK);
+        ProductHibernate productHibernate = productHibernateOptional.get();
+
+        productHibernate.setName(productDTO.getName());
+        productHibernate.setStored_amount(productDTO.getStored_amount());
+
+        productHibernateRepository.save(productHibernate);
+//        return new ResponseEntity<>(productHibernateRepository.save(_productHibernate), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/remove/{id}")
