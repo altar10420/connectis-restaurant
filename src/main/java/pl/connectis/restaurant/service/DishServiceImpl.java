@@ -80,6 +80,8 @@ public class DishServiceImpl implements DishService {
         dishHibernate.setDescription(description);
         dishHibernate.setPrice(price);
         dishHibernate.setAvailable(isAvailable);
+
+        dishHibernateRepository.save(dishHibernate);
     }
 
     @Override

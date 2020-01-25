@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.ClientDTO;
 import pl.connectis.restaurant.domain.ClientHibernate;
+import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.ClientHibernateRepository;
 import pl.connectis.restaurant.service.ClientService;
 
@@ -45,17 +47,20 @@ public class ClientController {
         return clientId;
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ClientHibernate> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO drinkDTO){
-//        Optional<ClientHibernate> clientHibernateOptional = clientHibernateRepository.findById(id);
-//        ClientHibernate _clientHibernate = clientHibernateOptional.get();
-//        if(clientHibernateOptional.isPresent()){
-//            _clientHibernate.setName(drinkDTO.getName());
-//            _clientHibernate.setSurname(drinkDTO.getSurname());
-//            _clientHibernate.setDiscount(drinkDTO.getDiscount());
-//        }
-//        return new ResponseEntity<>(clientHibernateRepository.save(_clientHibernate), HttpStatus.OK);
-//    }
+    @PutMapping("/{id}")
+    public void updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO clientDTO){
+        Optional<ClientHibernate> clientOptional = clientHibernateRepository.findById(id);
+
+        if(!clientOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+
+        clientService.updateClient(id,
+                clientDTO.getName(),
+                clientDTO.getSurname(),
+                clientDTO.getDiscount()
+        );
+    }
 
     @DeleteMapping(path = "/{id}")
     public String removeClient(@PathVariable("id") Long id) {

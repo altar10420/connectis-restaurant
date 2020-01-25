@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DishDTO;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
 import pl.connectis.restaurant.service.DishService;
 
@@ -29,6 +30,9 @@ public class DishController {
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
         Optional<DishHibernate> dishOptional = dishService.getDish(id);
+        if(!dishOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         //TODO throw some exception if failed
         return new DishDTO(dishOptional.get());
     }
@@ -58,16 +62,18 @@ public class DishController {
     }
 
     @PutMapping("/{id}")
-    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO drinkDTO){
-        Optional<DishHibernate> dishHibernateOptional = dishHibernateRepository.findById(id);
-        DishHibernate dishHibernate = dishHibernateOptional.get();
+    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO dishDTO){
+        Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 
-            dishHibernate.setName(drinkDTO.getName());
-            dishHibernate.setDescription(drinkDTO.getDescription());
-            dishHibernate.setPrice(drinkDTO.getPrice());
-            dishHibernate.setAvailable(drinkDTO.getAvailable());
+        if(!dishOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
 
-//        return new ResponseEntity<>(dishHibernateRepository.save(dishHibernate), HttpStatus.OK);
+        dishService.updateDish(id,
+                dishDTO.getName(),
+                dishDTO.getDescription(),
+                dishDTO.getPrice(),
+                dishDTO.getAvailable());
     }
 
     @DeleteMapping(path = "/remove/{id}")

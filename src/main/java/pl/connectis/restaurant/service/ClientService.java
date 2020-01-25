@@ -19,4 +19,6 @@ public interface ClientService {
     List<ClientHibernate> getAllClient(Pageable pageable);
 
     void removeClient(Long id);
+
+    void updateClient(Long id, String name, String surname, BigDecimal discount);
 }
