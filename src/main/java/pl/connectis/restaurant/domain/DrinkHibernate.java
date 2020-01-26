@@ -13,17 +13,21 @@ public class DrinkHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
     private Boolean isAvailable;
 
+    @Column(nullable = false)
     private BigDecimal portion_ml;
 
-    //TODO check if this relation is set in a correct way, should it be PERSIST???
     @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 

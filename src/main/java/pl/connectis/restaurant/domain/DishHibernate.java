@@ -17,12 +17,16 @@ public class DishHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
     private Boolean isAvailable;
 
     //TODO check if this relation is set in a correct way, should it be PERSIST???

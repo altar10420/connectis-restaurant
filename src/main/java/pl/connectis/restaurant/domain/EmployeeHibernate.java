@@ -13,19 +13,24 @@ public class EmployeeHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String surname;
 
+    @Column(nullable = false)
     private String position;
 
+    @Column(nullable = false)
     private BigDecimal salary;
 
+    @Column(nullable = false)
     private Long managerId;
 
+    @Column(nullable = false, unique = true)
     private Long pesel;
 
-    //TODO check relation and its config
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillHibernate> bills;
 

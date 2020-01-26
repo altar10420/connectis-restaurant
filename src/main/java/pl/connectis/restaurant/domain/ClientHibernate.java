@@ -15,10 +15,13 @@ public class ClientHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String surname;
 
+    @Column(nullable = false)
     private BigDecimal discount;
 
     //TODO check relation and its config

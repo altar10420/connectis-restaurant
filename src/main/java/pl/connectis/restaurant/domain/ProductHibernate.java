@@ -1,9 +1,6 @@
 package pl.connectis.restaurant.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -16,8 +13,10 @@ public class ProductHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private BigInteger stored_amount;
 
     public ProductHibernate() {

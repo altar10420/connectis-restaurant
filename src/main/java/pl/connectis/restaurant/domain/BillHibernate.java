@@ -16,6 +16,7 @@ public class BillHibernate {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime date;
 
     private BigDecimal price;

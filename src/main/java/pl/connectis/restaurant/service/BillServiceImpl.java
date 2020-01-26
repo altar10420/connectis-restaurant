@@ -104,7 +104,7 @@ public class BillServiceImpl implements BillService {
 
         bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
 
-        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+        BigDecimal tip = bill.getPrice().multiply(new BigDecimal(0.05));
 
         bill.setPrice(bill.getPrice().add(tip));
 
@@ -138,7 +138,7 @@ public class BillServiceImpl implements BillService {
 
         bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())));
 
-        BigDecimal tip = new BigDecimal(String.valueOf(bill.getPrice())).multiply(new BigDecimal(0.05));
+        BigDecimal tip = bill.getPrice().multiply(new BigDecimal(0.05));
 
         bill.setPrice(bill.getPrice().add(tip));
 
