@@ -27,12 +27,11 @@ public class EmployeeController {
 
     @GetMapping(path = "/{id}")
     public EmployeeDTO getEmployee(@PathVariable("id") Long id) {
-        Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
 
-        if(!employeeOptional.isPresent()) {
+        if(!employeeService.getEmployee(id).isPresent()) {
             throw new EntityDoesNotExistException();
         }
-        return new EmployeeDTO(employeeOptional.get());
+        return new EmployeeDTO(employeeService.getEmployee(id).get());
     }
 
     @PostMapping(path = "/")

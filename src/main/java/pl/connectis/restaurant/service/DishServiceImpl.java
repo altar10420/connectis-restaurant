@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
@@ -44,10 +45,15 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Optional<DishHibernate> getDish(Long id) {
-        return dishHibernateRepository.findById(id).map(this::toDomain);
+
+        Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
+
+        if(!dishOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        return dishHibernateRepository.findById(id);
     }
 
-    //TODO how to implement this in DishHibernateController???
     @Override
     public List<DishHibernate> getAllDishes(Pageable pageable) {
         Page<DishHibernate> page = dishHibernateRepository.findAll(pageable);

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.ClientDTO;
+import pl.connectis.restaurant.controller.dto.DishDTO;
 import pl.connectis.restaurant.domain.ClientHibernate;
 import pl.connectis.restaurant.domain.DishHibernate;
 import pl.connectis.restaurant.domain.DrinkHibernate;
@@ -33,9 +34,10 @@ public class ClientController {
 
     @GetMapping(path = "/{id}")
     public ClientDTO getClient(@PathVariable("id") Long id) {
-        Optional<ClientHibernate> clientOptional = clientService.getClient(id);
-        //TODO throw some exception if failed to get
-        return new ClientDTO(clientOptional.get());
+        if(!clientService.getClient(id).isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        return new ClientDTO(clientService.getClient(id).get());
     }
 
     @PostMapping(path = "/")

@@ -2,6 +2,7 @@ package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.connectis.restaurant.controller.dto.EmployeeDTO;
 import pl.connectis.restaurant.controller.dto.ProductDTO;
 import pl.connectis.restaurant.domain.ProductHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
@@ -25,6 +26,9 @@ public class ProductController {
 
     @GetMapping(path = "/{id}")
     public ProductDTO getProduct(@PathVariable("id") Long id) {
+        if(!productService.getProduct(id).isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         return new ProductDTO(productService.getProduct(id).get());
     }
 

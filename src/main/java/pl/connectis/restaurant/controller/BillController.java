@@ -3,6 +3,8 @@ package pl.connectis.restaurant.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.BillDTO;
+import pl.connectis.restaurant.controller.dto.DishDTO;
+import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.service.BillService;
 
 
@@ -20,6 +22,9 @@ public class BillController {
     @GetMapping(path = "/{id}")
     public BillDTO getBill(@PathVariable("id") Long id) {
 
+        if(!billService.getBill(id).isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
         return new BillDTO(billService.getBill(id).get());
     }
 

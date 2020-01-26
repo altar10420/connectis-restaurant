@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DishDTO;
+import pl.connectis.restaurant.controller.dto.DrinkDTO;
 import pl.connectis.restaurant.domain.DishHibernate;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
@@ -31,12 +32,10 @@ public class DishController {
 
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
-        Optional<DishHibernate> dishOptional = dishService.getDish(id);
-        if(!dishOptional.isPresent()) {
+        if(!dishService.getDish(id).isPresent()) {
             throw new EntityDoesNotExistException();
         }
-        //TODO throw some exception if failed
-        return new DishDTO(dishOptional.get());
+        return new DishDTO(dishService.getDish(id).get());
     }
 
     @GetMapping(path = "/menu/{page}")
@@ -47,7 +46,6 @@ public class DishController {
         for (DishHibernate dish : dishList) {
             dishDTOList.add(new DishDTO(dish));
         }
-        //TODO throw some message/exception if failed
         return dishDTOList;
     }
 
@@ -59,7 +57,6 @@ public class DishController {
                 dishDTO.getPrice(),
                 dishDTO.getAvailable()
         );
-        //TODO throw some message/exception if failed
         return dishId;
     }
 

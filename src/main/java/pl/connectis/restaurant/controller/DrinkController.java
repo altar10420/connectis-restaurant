@@ -30,8 +30,11 @@ public class DrinkController {
 
     @GetMapping(path = "/{id}")
     public DrinkDTO getDrink(@PathVariable("id") Long id) {
-        Optional<DrinkHibernate> drinkOptional = drinkService.getDrink(id);
-        return new DrinkDTO(drinkOptional.get());
+
+        if(!drinkService.getDrink(id).isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        return new DrinkDTO(drinkService.getDrink(id).get());
     }
 
     @GetMapping(path = "/menu/{page}")

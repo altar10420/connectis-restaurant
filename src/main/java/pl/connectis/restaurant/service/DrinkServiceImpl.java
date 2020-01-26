@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.connectis.restaurant.domain.DishHibernate;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
@@ -46,7 +47,12 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public Optional<DrinkHibernate> getDrink(Long id) {
-        return drinkHibernateRepository.findById(id).map(this::toDomain);
+        Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
+
+        if(!drinkOptional.isPresent()) {
+            throw new EntityDoesNotExistException();
+        }
+        return drinkHibernateRepository.findById(id);
     }
 
     @Override
