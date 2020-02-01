@@ -26,10 +26,8 @@ public class ClientController {
 
     @GetMapping(path = "/{id}")
     public ClientDTO getClient(@PathVariable("id") Long id) {
-        if (!clientService.getClient(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new ClientDTO(clientService.getClient(id).get());
+
+        return new ClientDTO(clientService.getClient(id));
     }
 
     @PostMapping(path = "/")

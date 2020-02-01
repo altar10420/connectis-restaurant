@@ -19,7 +19,7 @@ public interface BillService {
             Long employeeId
     );
 
-    Optional<BillHibernate> getBill(Long billId);
+    BillHibernate getBill(Long billId);
 
     Long addDish(Long billId, Long dishId);
 

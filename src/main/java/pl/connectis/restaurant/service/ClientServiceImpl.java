@@ -1,7 +1,6 @@
 package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.connectis.restaurant.domain.ClientHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
@@ -36,12 +35,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<ClientHibernate> getClient(Long id) {
-        return clientRepository.findById(id);
+    public ClientHibernate getClient(Long id) {
+        return clientRepository.getById(id);
     }
 
     @Override
-    public List<ClientHibernate> getAllClient(Pageable pageable) {
+    public List<ClientHibernate> getAllClients() {
         return null;
     }
 

@@ -82,32 +82,18 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Optional<BillHibernate> getBill(Long billId) {
+    public BillHibernate getBill(Long billId) {
 
-        Optional<BillHibernate> billOptional = billRepository.findById(billId);
-        if (!billOptional.isPresent()) {
-            throw new EntityDoesNotExistException("Bill does not exist");
-        }
-        return billRepository.findById(billId);
+        return billRepository.getById(billId);
     }
 
     @Override
     @Transactional
     public Long addDish(Long billId, Long dishId) {
 
-        Optional<BillHibernate> billOptional = billRepository.findById(billId);
-        if (!billOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        BillHibernate bill = billRepository.getById(billId);
 
-        Optional<DishHibernate> dishOptional = dishRepository.findById(dishId);
-        if (!dishOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-
-        BillHibernate bill = billOptional.get();
-
-        DishHibernate dish = dishOptional.get();
+        DishHibernate dish = dishRepository.getById(dishId);
 
         ClientHibernate client = bill.getClient();
 
@@ -129,19 +115,9 @@ public class BillServiceImpl implements BillService {
     @Override
     public Long addDrink(Long billId, Long drinkId) {
 
-        Optional<BillHibernate> billOptional = billRepository.findById(billId);
-        if (!billOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        BillHibernate bill = billRepository.getById(billId);
 
-        Optional<DrinkHibernate> drinkOptional = drinkRepository.findById(drinkId);
-        if (!drinkOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-
-        BillHibernate bill = billOptional.get();
-
-        DrinkHibernate drink = drinkOptional.get();
+        DrinkHibernate drink = drinkRepository.getById(drinkId);
 
         ClientHibernate client = bill.getClient();
 

@@ -18,9 +18,9 @@ public interface EmployeeService {
             Long managerId
     );
 
-    Optional<EmployeeHibernate> getEmployee(Long id);
+    EmployeeHibernate getEmployee(Long id);
 
-    List<EmployeeHibernate> getAllEmployee(Pageable pageable);
+    List<EmployeeHibernate> getAllEmployees();
 
     void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId);
 

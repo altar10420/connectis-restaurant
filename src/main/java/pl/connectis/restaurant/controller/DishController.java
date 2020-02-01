@@ -28,10 +28,8 @@ public class DishController {
 
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
-        if (!dishService.getDish(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new DishDTO(dishService.getDish(id).get());
+
+        return new DishDTO(dishService.getDish(id));
     }
 
     @GetMapping(path = "/menu/{page}")

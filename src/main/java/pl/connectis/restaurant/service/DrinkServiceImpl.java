@@ -45,13 +45,9 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Optional<DrinkHibernate> getDrink(Long id) {
-        Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
+    public DrinkHibernate getDrink(Long id) {
 
-        if (!drinkOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return drinkHibernateRepository.findById(id);
+        return drinkHibernateRepository.getById(id);
     }
 
     @Override

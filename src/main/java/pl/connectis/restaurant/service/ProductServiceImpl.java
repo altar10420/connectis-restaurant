@@ -33,12 +33,9 @@ public class ProductServiceImpl implements pl.connectis.restaurant.service.Produ
     }
 
     @Override
-    public Optional<ProductHibernate> getProduct(Long id) {
-        Optional<ProductHibernate> productOptional = productHibernateRepository.findById(id);
-        if (!productOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return productHibernateRepository.findById(id);
+    public ProductHibernate getProduct(Long id) {
+
+        return productHibernateRepository.getById(id);
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface DrinkService {
             BigDecimal portion_ml
     );
 
-    Optional<DrinkHibernate> getDrink(Long id);
+    DrinkHibernate getDrink(Long id);
 
     List<DrinkHibernate> getAllDrinks(Pageable pageable);
 

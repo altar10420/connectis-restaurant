@@ -25,10 +25,7 @@ public class EmployeeController {
     @GetMapping(path = "/{id}")
     public EmployeeDTO getEmployee(@PathVariable("id") Long id) {
 
-        if(!employeeService.getEmployee(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new EmployeeDTO(employeeService.getEmployee(id).get());
+        return new EmployeeDTO(employeeService.getEmployee(id));
     }
 
     @PostMapping(path = "/")

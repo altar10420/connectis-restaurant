@@ -28,10 +28,7 @@ public class DrinkController {
     @GetMapping(path = "/{id}")
     public DrinkDTO getDrink(@PathVariable("id") Long id) {
 
-        if (!drinkService.getDrink(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new DrinkDTO(drinkService.getDrink(id).get());
+        return new DrinkDTO(drinkService.getDrink(id));
     }
 
     @GetMapping(path = "/menu/{page}")

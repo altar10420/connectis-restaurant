@@ -16,7 +16,7 @@ public interface DishService {
             Boolean isAvailable
     );
 
-    Optional<DishHibernate> getDish(Long id);
+    DishHibernate getDish(Long id);
 
     List<DishHibernate> getAllDishes(Pageable pageable);
 

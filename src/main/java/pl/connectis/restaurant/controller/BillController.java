@@ -21,10 +21,7 @@ public class BillController {
     @GetMapping(path = "/{id}")
     public BillDTO getBill(@PathVariable("id") Long id) {
 
-        if(!billService.getBill(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new BillDTO(billService.getBill(id).get());
+        return new BillDTO(billService.getBill(id));
     }
 
     @PostMapping(path = "/create")

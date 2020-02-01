@@ -25,10 +25,8 @@ public class ProductController {
 
     @GetMapping(path = "/{id}")
     public ProductDTO getProduct(@PathVariable("id") Long id) {
-        if (!productService.getProduct(id).isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return new ProductDTO(productService.getProduct(id).get());
+
+        return new ProductDTO(productService.getProduct(id));
     }
 
     @PostMapping(path = "/")

@@ -13,7 +13,7 @@ public interface ProductService {
             BigInteger stored_amount
     );
 
-    Optional<ProductHibernate> getProduct(Long id);
+    ProductHibernate getProduct(Long id);
 
     List<ProductHibernate> getProductMenuPage(int page);
 

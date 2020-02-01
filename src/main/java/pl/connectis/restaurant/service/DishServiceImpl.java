@@ -42,14 +42,9 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Optional<DishHibernate> getDish(Long id) {
+    public DishHibernate getDish(Long id) {
 
-        Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
-
-        if (!dishOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
-        return dishHibernateRepository.findById(id);
+        return dishHibernateRepository.getById(id);
     }
 
     @Override

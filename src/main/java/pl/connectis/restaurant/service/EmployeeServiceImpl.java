@@ -1,8 +1,6 @@
 package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
@@ -12,7 +10,6 @@ import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -46,17 +43,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<EmployeeHibernate> getEmployee(Long id) {
-        return employeeHibernateRepository.findById(id).map(this::toDomain);
+    public EmployeeHibernate getEmployee(Long id) {
+        return employeeHibernateRepository.getById(id);
     }
 
     @Override
-    public List<EmployeeHibernate> getAllEmployee(Pageable pageable) {
-        Page<EmployeeHibernate> page = employeeHibernateRepository.findAll(pageable);
-        List<EmployeeHibernate> hibernates = page.getContent();
-        return hibernates.stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+    public List<EmployeeHibernate> getAllEmployees() {
+        return null;
     }
 
     @Override
@@ -84,15 +77,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeHibernateRepository.deleteById(id);
     }
 
-    public EmployeeHibernate toDomain(EmployeeHibernate hibernate) {
-        return new EmployeeHibernate(
-                hibernate.getId(),
-                hibernate.getName(),
-                hibernate.getSurname(),
-                hibernate.getPosition(),
-                hibernate.getSalary(),
-                hibernate.getManagerId(),
-                hibernate.getPesel()
-        );
-    }
 }
