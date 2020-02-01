@@ -8,6 +8,7 @@ import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +50,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeHibernate> getAllEmployees() {
-        return null;
+
+        Iterable<EmployeeHibernate> employees = employeeHibernateRepository.findAll();
+
+        List<EmployeeHibernate> employeeList = new ArrayList<>();
+
+        for (EmployeeHibernate employee : employees) {
+            employeeList.add(employee);
+        }
+
+        return employeeList;
     }
 
     @Override

@@ -31,9 +31,10 @@ public class DrinkController {
         return new DrinkDTO(drinkService.getDrink(id));
     }
 
-    @GetMapping(path = "/menu/{page}")
-    public List<DrinkDTO> getDrinkMenuPage(@PathVariable("page") Integer page) {
-        List<DrinkHibernate> drinkList = drinkService.getDrinkMenuPage(page);
+    @GetMapping(path = "/menu/{page}/{amountOnPage}")
+    public List<DrinkDTO> getDrinksByPage(@PathVariable("page") Integer page,
+                                           @PathVariable("amountOnPage") Integer amountOnPage) {
+        List<DrinkHibernate> drinkList = drinkService.getDrinksByPage(page, amountOnPage);
         List<DrinkDTO> drinkDTOList = new ArrayList<>();
 
         for (DrinkHibernate drink : drinkList) {

@@ -8,6 +8,8 @@ import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.EmployeeHibernateRepository;
 import pl.connectis.restaurant.service.EmployeeService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +30,19 @@ public class EmployeeController {
         return new EmployeeDTO(employeeService.getEmployee(id));
     }
 
+    @GetMapping(path = "/all")
+    public List<EmployeeDTO> getAllEmployees() {
+
+        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+
+        for (EmployeeHibernate employeeHibernate : employeeService.getAllEmployees()) {
+
+            employeeDTOList.add(new EmployeeDTO(employeeHibernate));
+        }
+
+        return employeeDTOList;
+    }
+
     @PostMapping(path = "/")
     public Long createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Long employeeId = employeeService.createEmployee(
@@ -45,7 +60,7 @@ public class EmployeeController {
     public void updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDTO employeeDTO) {
         Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
 
-        if(!employeeOptional.isPresent()) {
+        if (!employeeOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 
@@ -63,7 +78,7 @@ public class EmployeeController {
 
         Optional<EmployeeHibernate> employeeOptional = employeeHibernateRepository.findById(id);
 
-        if(!employeeOptional.isPresent()) {
+        if (!employeeOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
         employeeService.removeEmployee(id);

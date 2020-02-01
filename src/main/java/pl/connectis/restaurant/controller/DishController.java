@@ -32,9 +32,10 @@ public class DishController {
         return new DishDTO(dishService.getDish(id));
     }
 
-    @GetMapping(path = "/menu/{page}")
-    public List<DishDTO> getDishMenuPage(@PathVariable("page") Integer page) {
-        List<DishHibernate> dishList = dishService.getDishMenuPage(page);
+    @GetMapping(path = "/menu/{page}/{amountOnPage}")
+    public List<DishDTO> getDishesByPage(@PathVariable("page") Integer page,
+                                         @PathVariable("amountOnPage") Integer amountOnPage) {
+        List<DishHibernate> dishList = dishService.getDishesByPage(page, amountOnPage);
         List<DishDTO> dishDTOList = new ArrayList<>();
 
         for (DishHibernate dish : dishList) {

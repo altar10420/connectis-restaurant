@@ -3,10 +3,10 @@ package pl.connectis.restaurant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DishHibernate;
+import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
 
@@ -48,22 +48,25 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<DishHibernate> getAllDishes(Pageable pageable) {
-        Page<DishHibernate> page = dishHibernateRepository.findAll(pageable);
-        List<DishHibernate> hibernates = page.getContent();
-        return hibernates.stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+    public List<DishHibernate> getAllDishes() {
+
+        Iterable<DishHibernate> dishes = dishHibernateRepository.findAll();
+
+        List<DishHibernate> dishList = new ArrayList<>();
+
+        for (DishHibernate dish : dishes) {
+            dishList.add(dish);
+        }
+
+        return dishList;
     }
 
     @Override
-    public List<DishHibernate> getDishMenuPage(int page) {
-        Page<DishHibernate> dishHibernateList = dishHibernateRepository.findAll(PageRequest.of(page, 10));
-        List<DishHibernate> hibernates = dishHibernateList.getContent();
+    public List<DishHibernate> getDishesByPage(int page, int amountOnPage) {
+        Page<DishHibernate> dishHibernateList = dishHibernateRepository
+                .findAll(PageRequest.of(page - 1, amountOnPage));
 
-        return hibernates.stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+        return dishHibernateList.stream().collect(Collectors.toList());
     }
 
     @Override
@@ -86,15 +89,5 @@ public class DishServiceImpl implements DishService {
     @Override
     public void removeDish(Long id) {
         dishHibernateRepository.deleteById(id);
-    }
-
-    public DishHibernate toDomain(DishHibernate hibernate) {
-        return new DishHibernate(
-                hibernate.getId(),
-                hibernate.getName(),
-                hibernate.getDescription(),
-                hibernate.getPrice(),
-                hibernate.getAvailable()
-        );
     }
 }

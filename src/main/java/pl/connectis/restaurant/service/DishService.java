@@ -1,11 +1,9 @@
 package pl.connectis.restaurant.service;
 
-import org.springframework.data.domain.Pageable;
 import pl.connectis.restaurant.domain.DishHibernate;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface DishService {
 
@@ -18,9 +16,9 @@ public interface DishService {
 
     DishHibernate getDish(Long id);
 
-    List<DishHibernate> getAllDishes(Pageable pageable);
+    List<DishHibernate> getAllDishes();
 
-    List<DishHibernate> getDishMenuPage(int page);
+    List<DishHibernate> getDishesByPage(int page, int amountOnPage);
 
     void updateDish(Long id, String name, String description, BigDecimal price, Boolean isAvailable);
 
