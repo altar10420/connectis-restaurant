@@ -28,7 +28,7 @@ public class DrinkHibernate {
     @Column(nullable = false)
     private BigDecimal portion_ml;
 
-    @ManyToMany(mappedBy = "drinks", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "drinks", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 
     public DrinkHibernate(Long id,

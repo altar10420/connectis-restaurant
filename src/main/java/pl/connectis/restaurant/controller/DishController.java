@@ -1,13 +1,9 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DishDTO;
-import pl.connectis.restaurant.controller.dto.DrinkDTO;
 import pl.connectis.restaurant.domain.DishHibernate;
-import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
 import pl.connectis.restaurant.service.DishService;
@@ -32,7 +28,7 @@ public class DishController {
 
     @GetMapping(path = "/{id}")
     public DishDTO getDish(@PathVariable("id") Long id) {
-        if(!dishService.getDish(id).isPresent()) {
+        if (!dishService.getDish(id).isPresent()) {
             throw new EntityDoesNotExistException();
         }
         return new DishDTO(dishService.getDish(id).get());
@@ -62,10 +58,10 @@ public class DishController {
 
     @PutMapping("/{id}")
 
-    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO dishDTO){
+    public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO dishDTO) {
         Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 
-        if(!dishOptional.isPresent()) {
+        if (!dishOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 
@@ -81,7 +77,7 @@ public class DishController {
 
         Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 
-        if(!dishOptional.isPresent()) {
+        if (!dishOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 

@@ -1,12 +1,9 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.DrinkDTO;
 import pl.connectis.restaurant.domain.DrinkHibernate;
-import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.service.DrinkService;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
@@ -31,7 +28,7 @@ public class DrinkController {
     @GetMapping(path = "/{id}")
     public DrinkDTO getDrink(@PathVariable("id") Long id) {
 
-        if(!drinkService.getDrink(id).isPresent()) {
+        if (!drinkService.getDrink(id).isPresent()) {
             throw new EntityDoesNotExistException();
         }
         return new DrinkDTO(drinkService.getDrink(id).get());
@@ -66,7 +63,7 @@ public class DrinkController {
 
         Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
 
-        if(!drinkOptional.isPresent()) {
+        if (!drinkOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 
@@ -83,7 +80,7 @@ public class DrinkController {
 
         Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
 
-        if(!drinkOptional.isPresent()) {
+        if (!drinkOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 

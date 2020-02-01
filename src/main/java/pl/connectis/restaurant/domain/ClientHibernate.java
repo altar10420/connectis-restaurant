@@ -24,7 +24,6 @@ public class ClientHibernate {
     @Column(nullable = false)
     private BigDecimal discount;
 
-    //TODO check relation and its config
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillHibernate> bills;
 

@@ -1,7 +1,9 @@
 package pl.connectis.restaurant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.*;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.*;
@@ -12,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
+@Transactional(readOnly = true)
 public class BillServiceImpl implements BillService {
 
     private final BillHibernateRepository billRepository;
@@ -20,6 +23,12 @@ public class BillServiceImpl implements BillService {
     private final DrinkHibernateRepository drinkRepository;
     private final ClientHibernateRepository clientRepository;
     private final EmployeeHibernateRepository employeeRepository;
+
+    @Value("${billServiceImpl.tipDish}")
+    private double tipDish;
+
+    @Value("${billServiceImpl.tipDrink}")
+    private double tipDrink;
 
 
     @Autowired
@@ -36,6 +45,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    @Transactional
     public Long createBill(
             LocalDateTime date,
             BigDecimal price,
@@ -56,10 +66,10 @@ public class BillServiceImpl implements BillService {
         }
 
         BillHibernate bill = new BillHibernate(
-            null,
-            LocalDateTime.now(),
-            BigDecimal.valueOf(0),
-            BigDecimal.valueOf(0),
+                null,
+                LocalDateTime.now(),
+                BigDecimal.valueOf(0),
+                BigDecimal.valueOf(0),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 clientOptional.get(),
@@ -82,6 +92,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    @Transactional
     public Long addDish(Long billId, Long dishId) {
 
         Optional<BillHibernate> billOptional = billRepository.findById(billId);
@@ -104,7 +115,7 @@ public class BillServiceImpl implements BillService {
 
         bill.setPrice(bill.getPrice().add(dish.getPrice().multiply(client.getDiscount())));
 
-        BigDecimal tip = bill.getPrice().multiply(new BigDecimal(0.05));
+        BigDecimal tip = bill.getPrice().multiply(BigDecimal.valueOf(tipDish));
 
         bill.setPrice(bill.getPrice().add(tip));
 
@@ -138,7 +149,7 @@ public class BillServiceImpl implements BillService {
 
         bill.setPrice(bill.getPrice().add(drink.getPrice().multiply(client.getDiscount())));
 
-        BigDecimal tip = bill.getPrice().multiply(new BigDecimal(0.05));
+        BigDecimal tip = bill.getPrice().multiply(BigDecimal.valueOf(tipDrink));
 
         bill.setPrice(bill.getPrice().add(tip));
 

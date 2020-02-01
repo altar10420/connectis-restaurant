@@ -24,8 +24,6 @@ public class BillHibernate {
     private BigDecimal tip;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-// it must be LAZY when multiple ManyToMany - otherwise it wants to get all the objects the same
-// time, and raises MultipleBagFetchException
     @JoinTable(
             name = "dish_bill",
             joinColumns = @JoinColumn(name = "bill_id"),
@@ -33,10 +31,7 @@ public class BillHibernate {
     )
     private List<DishHibernate> dishes;
 
-    //TODO check what fetch and cascade should be here
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-// it must be LAZY when multiple ManyToMany - otherwise it wants to get all the objects the same
-// time, and raises MultipleBagFetchException
     @JoinTable(
             name = "drink_bill",
             joinColumns = @JoinColumn(name = "bill_id"),

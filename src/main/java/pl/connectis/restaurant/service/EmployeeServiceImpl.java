@@ -3,7 +3,7 @@ package pl.connectis.restaurant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Repository
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeHibernateRepository employeeHibernateRepository;
@@ -26,11 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Long createEmployee(String name,
-                                   String surname,
-                                   String position,
-                                   BigDecimal salary,
-                                   Long pesel,
-                                   Long managerId) {
+                               String surname,
+                               String position,
+                               BigDecimal salary,
+                               Long pesel,
+                               Long managerId) {
         EmployeeHibernate employeeHibernate = new EmployeeHibernate(
                 null,
                 name,
@@ -61,9 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId){
+    public void updateEmployee(Long id, String name, String surname, String position, BigDecimal salary, Long pesel, Long managerId) {
         Optional<EmployeeHibernate> optionalEmployeeHibernate = employeeHibernateRepository.findById(id);
-        if (!optionalEmployeeHibernate.isPresent()){
+        if (!optionalEmployeeHibernate.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 
@@ -77,8 +77,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeHibernateRepository.save(employeeHibernate);
     }
-
-
 
 
     @Override

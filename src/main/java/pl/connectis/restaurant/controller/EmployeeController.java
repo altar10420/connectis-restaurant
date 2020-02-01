@@ -1,10 +1,7 @@
 package pl.connectis.restaurant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import pl.connectis.restaurant.controller.dto.EmployeeDTO;
 import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;

@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.DishHibernate;
-import pl.connectis.restaurant.domain.DrinkHibernate;
-import pl.connectis.restaurant.domain.EmployeeHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DishHibernateRepository;
 
@@ -16,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository
+@Service
 public class DishServiceImpl implements DishService {
 
     private final DishHibernateRepository dishHibernateRepository;
@@ -48,7 +46,7 @@ public class DishServiceImpl implements DishService {
 
         Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 
-        if(!dishOptional.isPresent()) {
+        if (!dishOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
         return dishHibernateRepository.findById(id);
@@ -75,9 +73,9 @@ public class DishServiceImpl implements DishService {
 
     @Override
     @Transactional
-    public void updateDish(Long id, String name, String description, BigDecimal price, Boolean isAvailable){
+    public void updateDish(Long id, String name, String description, BigDecimal price, Boolean isAvailable) {
         Optional<DishHibernate> optionalDishHibernate = dishHibernateRepository.findById(id);
-        if (!optionalDishHibernate.isPresent()){
+        if (!optionalDishHibernate.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 

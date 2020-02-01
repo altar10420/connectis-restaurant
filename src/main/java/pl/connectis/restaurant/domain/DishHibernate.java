@@ -1,6 +1,5 @@
 package pl.connectis.restaurant.domain;
 
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,8 +28,7 @@ public class DishHibernate {
     @Column(nullable = false)
     private Boolean isAvailable;
 
-    //TODO check if this relation is set in a correct way, should it be PERSIST???
-    @ManyToMany(mappedBy = "dishes", cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "dishes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BillHibernate> bills;
 
     public DishHibernate() {
@@ -52,9 +50,13 @@ public class DishHibernate {
         return id;
     }
 
-    public String getName() {return  name;}
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) {this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getDescription() {
         return description;

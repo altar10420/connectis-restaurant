@@ -1,6 +1,6 @@
 package pl.connectis.restaurant.service;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.ProductHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Repository
+@Service
 public class ProductServiceImpl implements pl.connectis.restaurant.service.ProductService {
 
     private final ProductHibernateRepository productHibernateRepository;
@@ -22,14 +22,14 @@ public class ProductServiceImpl implements pl.connectis.restaurant.service.Produ
 
     @Override
     public Long createProduct(String name, BigInteger stored_amount) {
-            ProductHibernate productHibernate = new ProductHibernate(
-                    null,
-                    name,
-                    stored_amount
-            );
+        ProductHibernate productHibernate = new ProductHibernate(
+                null,
+                name,
+                stored_amount
+        );
 
-            productHibernateRepository.save(productHibernate);
-            return productHibernate.getId();
+        productHibernateRepository.save(productHibernate);
+        return productHibernate.getId();
     }
 
     @Override
@@ -48,9 +48,9 @@ public class ProductServiceImpl implements pl.connectis.restaurant.service.Produ
 
     @Override
     @Transactional
-    public void updateProduct(Long id, String name, BigInteger stored_amount){
+    public void updateProduct(Long id, String name, BigInteger stored_amount) {
         Optional<ProductHibernate> optionalProductHibernate = productHibernateRepository.findById(id);
-        if (!optionalProductHibernate.isPresent()){
+        if (!optionalProductHibernate.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 

@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.connectis.restaurant.domain.DishHibernate;
 import pl.connectis.restaurant.domain.DrinkHibernate;
 import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.DrinkHibernateRepository;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Repository
+@Service
 public class DrinkServiceImpl implements DrinkService {
 
     private final DrinkHibernateRepository drinkHibernateRepository;
@@ -28,10 +27,10 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public Long createDrink(String name,
-                           String description,
-                           BigDecimal price,
-                           Boolean isAvailable,
-                           BigDecimal portion_ml) {
+                            String description,
+                            BigDecimal price,
+                            Boolean isAvailable,
+                            BigDecimal portion_ml) {
         DrinkHibernate drinkHibernate = new DrinkHibernate(
                 null,
                 name,
@@ -49,7 +48,7 @@ public class DrinkServiceImpl implements DrinkService {
     public Optional<DrinkHibernate> getDrink(Long id) {
         Optional<DrinkHibernate> drinkOptional = drinkHibernateRepository.findById(id);
 
-        if(!drinkOptional.isPresent()) {
+        if (!drinkOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
         return drinkHibernateRepository.findById(id);
@@ -79,7 +78,7 @@ public class DrinkServiceImpl implements DrinkService {
     public void updateDrink(Long id, String name, String description, BigDecimal price, Boolean isAvailable, BigDecimal portion_ml) {
         Optional<DrinkHibernate> drinkHibernateOptional = drinkHibernateRepository.findById(id);
 
-        if (!drinkHibernateOptional.isPresent()){
+        if (!drinkHibernateOptional.isPresent()) {
             throw new EntityDoesNotExistException();
         }
 
