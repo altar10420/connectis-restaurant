@@ -11,5 +11,4 @@ public interface EmployeeHibernateRepository
         return findById(employeeId).orElseThrow(
                 () -> new EntityDoesNotExistException("Employee id: " + employeeId + " not found"));
     }
-
 }

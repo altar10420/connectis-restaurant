@@ -11,5 +11,4 @@ public interface DrinkHibernateRepository
         return findById(drinkId).orElseThrow(
                 () -> new EntityDoesNotExistException("Drink id: " + drinkId + " not found"));
     }
-
 }

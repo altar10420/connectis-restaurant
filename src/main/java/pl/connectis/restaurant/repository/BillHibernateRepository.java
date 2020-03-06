@@ -11,5 +11,4 @@ public interface BillHibernateRepository
         return findById(billId).orElseThrow(
                 () -> new EntityDoesNotExistException("Bill id: " + billId + " not found"));
     }
-
 }

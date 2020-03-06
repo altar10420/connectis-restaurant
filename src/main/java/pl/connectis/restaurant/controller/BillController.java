@@ -3,7 +3,6 @@ package pl.connectis.restaurant.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.connectis.restaurant.controller.dto.BillDTO;
-import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.service.BillService;
 
 
@@ -29,10 +28,6 @@ public class BillController {
                         @RequestParam(name = "client") Long clientId) {
 
         Long billId = billService.createBill(
-                null,
-                null,
-                null,
-                null,
                 null,
                 clientId,
                 employeeId

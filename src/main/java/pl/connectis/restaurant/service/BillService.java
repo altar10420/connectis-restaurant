@@ -5,9 +5,10 @@ import pl.connectis.restaurant.domain.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface BillService {
+
+    Long createBill(LocalDateTime date, Long clientId, Long employeeId);
 
     Long createBill(
             LocalDateTime date,

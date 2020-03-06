@@ -52,6 +52,16 @@ public class BillHibernate {
 
     public BillHibernate(Long id,
                          LocalDateTime date,
+                         ClientHibernate client,
+                         EmployeeHibernate employee) {
+        this.id = id;
+        this.date = date;
+        this.client = client;
+        this.employee = employee;
+    }
+
+    public BillHibernate(Long id,
+                         LocalDateTime date,
                          BigDecimal price,
                          BigDecimal tip,
                          List<DishHibernate> dishes,

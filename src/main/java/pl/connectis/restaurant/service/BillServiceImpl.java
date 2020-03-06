@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.connectis.restaurant.domain.*;
-import pl.connectis.restaurant.exception.EntityDoesNotExistException;
 import pl.connectis.restaurant.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -46,6 +44,26 @@ public class BillServiceImpl implements BillService {
 
     @Override
     @Transactional
+    public Long createBill(LocalDateTime date, Long clientId, Long employeeId) {
+
+        ClientHibernate client = clientRepository.getById(clientId);
+
+        EmployeeHibernate employee = employeeRepository.getById(employeeId);
+
+        BillHibernate bill = new BillHibernate(
+                null,
+                LocalDateTime.now(),
+                client,
+                employee
+        );
+
+        billRepository.save(bill);
+
+        return bill.getId();
+    }
+
+    @Override
+    @Transactional
     public Long createBill(
             LocalDateTime date,
             BigDecimal price,
@@ -55,15 +73,9 @@ public class BillServiceImpl implements BillService {
             Long clientId,
             Long employeeId) {
 
-        Optional<ClientHibernate> clientOptional = clientRepository.findById(clientId);
-        if (!clientOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        ClientHibernate client = clientRepository.getById(clientId);
 
-        Optional<EmployeeHibernate> employeeOptional = employeeRepository.findById(employeeId);
-        if (!employeeOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        EmployeeHibernate employee = employeeRepository.getById(employeeId);
 
         BillHibernate bill = new BillHibernate(
                 null,
@@ -72,8 +84,8 @@ public class BillServiceImpl implements BillService {
                 BigDecimal.valueOf(0),
                 new ArrayList<>(),
                 new ArrayList<>(),
-                clientOptional.get(),
-                employeeOptional.get()
+                client,
+                employee
         );
 
         billRepository.save(bill);
@@ -83,7 +95,6 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public BillHibernate getBill(Long billId) {
-
         return billRepository.getById(billId);
     }
 
@@ -139,10 +150,7 @@ public class BillServiceImpl implements BillService {
     @Override
     public void removeBill(Long billId) {
 
-        Optional<BillHibernate> billOptional = billRepository.findById(billId);
-        if (!billOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        BillHibernate bill = billRepository.getById(billId);
 
         billRepository.deleteById(billId);
     }

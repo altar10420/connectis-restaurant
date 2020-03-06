@@ -11,5 +11,4 @@ public interface DishHibernateRepository
         return findById(dishId).orElseThrow(
                 () -> new EntityDoesNotExistException("Dish id: " + dishId + " not found"));
     }
-
 }
