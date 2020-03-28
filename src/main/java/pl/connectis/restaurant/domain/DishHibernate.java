@@ -13,7 +13,7 @@ public class DishHibernate {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -25,7 +25,6 @@ public class DishHibernate {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
     private Boolean isAvailable;
 
     @ManyToMany(mappedBy = "dishes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

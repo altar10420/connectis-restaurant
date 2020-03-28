@@ -58,11 +58,8 @@ public class DishController {
     @PutMapping("/{id}")
 
     public void updateDish(@PathVariable("id") Long id, @RequestBody DishDTO dishDTO) {
-        Optional<DishHibernate> dishOptional = dishHibernateRepository.findById(id);
 
-        if (!dishOptional.isPresent()) {
-            throw new EntityDoesNotExistException();
-        }
+        DishHibernate dishHibernate = dishHibernateRepository.getById(id);
 
         dishService.updateDish(id,
                 dishDTO.getName(),
